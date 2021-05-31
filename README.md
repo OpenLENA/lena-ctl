@@ -1,4 +1,4 @@
-## <img src="docs/images/readme_lena_ctl_head.png" width="800"> [![Github Maven Repository Upload](https://github.com/ArchiSol/lena-ctl/actions/workflows/gh-mvn-upload.yml/badge.svg)](https://github.com/ArchiSol/lena-ctl/actions/workflows/gh-mvn-upload.yml)  [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ArchiSol_lena-ctl&metric=alert_status&token=3fb2925874bfed0069342e263db6f2c0cec6b83a)](https://sonarcloud.io/dashboard?id=ArchiSol_lena-ctl)  [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=ArchiSol_lena-ctl&metric=coverage&token=3fb2925874bfed0069342e263db6f2c0cec6b83a)](https://sonarcloud.io/dashboard?id=ArchiSol_lena-ctl)
+## <img src="docs/images/readme_lena_ctl_head.png" width="800"> [![Github Maven Repository Upload](https://github.com/OpenLENA/lena-ctl/actions/workflows/gh-mvn-upload.yml/badge.svg)](https://github.com/OpenLENA/lena-ctl/actions/workflows/gh-mvn-upload.yml) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=OpenLENA_lena-ctl&metric=alert_status)](https://sonarcloud.io/dashboard?id=OpenLENA_lena-ctl) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=OpenLENA_lena-ctl&metric=coverage)](https://sonarcloud.io/dashboard?id=OpenLENA_lena-ctl)
 
 This is the home of the LENA Ctl.
 LENA Ctl help to install servers easily by offering command line interface in LENA.
@@ -37,7 +37,7 @@ LENA will be released every each quarter. You can get [released files]() and che
 You can find a roadmap of LENA Ctl [here](https://github.com/OpenLENA/lena-ctl/wiki/2021-Roadmap).
 
 ## Community
-[LENA Community](https://groups.google.com/g/lena-oe)
+[LENA Community](https://groups.google.com/g/openlena)
 
 ## License
 LENA Ctl is Open Source software released under the Apache 2.0 license.
