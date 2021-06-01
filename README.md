@@ -31,7 +31,7 @@ We use GitHub's integrated issue tracking system to record bugs and other issues
 + If possible, try to create a test-case.
 
 ## Release
-LENA will be released every each quarter. You can get [released files](https://github.com/OpenLENA/lena-ctl/packages/820803) and check what is changed in [release note](https://github.com/OpenLENA/lena-ctl/releases).
+LENA will be released every each quarter. You can get [released files](https://github.com/OpenLENA/lena-ctl/releases) and check what is changed in [release note](https://github.com/OpenLENA/lena-ctl/releases).
 
 ## Roadmap
 You can find a roadmap of LENA Ctl [here](https://github.com/OpenLENA/lena-ctl/wiki/2021-Roadmap).
