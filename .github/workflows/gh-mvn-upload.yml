@@ -25,12 +25,12 @@ jobs:
         run: cat ~/.m2/settings.xml
       - name: Packaging with Maven
         run: mvn -B package
-      - uses: actions/delete-package-versions@v1
-        continue-on-error: true
-        with:
-          owner: 'openlena'
-          repo: 'lena-ctl'
-          package-name: 'io.openlena.lena-ctl'
-          token: ${{ secrets.GH_MVN_REPO_PAT }}
+#      - uses: actions/delete-package-versions@v1
+#        continue-on-error: true
+#        with:
+#          owner: 'openlena'
+#          repo: 'lena-ctl'
+#          package-name: 'io.openlena.lena-ctl'
+#          token: ${{ secrets.GH_MVN_REPO_PAT }}
       - name: Deploy with Maven
         run: mvn -B deploy
