@@ -23,6 +23,7 @@ import org.apache.commons.cli.Options;
  */
 public class InstallCommandCtl {
 	final String CREATE = "CREATE";
+	final String CLONE = "CLONE";
 
 	Options options = null;
 
@@ -43,7 +44,14 @@ public class InstallCommandCtl {
 	 * @return true if user's input is a command defined.
 	 */
 	public boolean containsCommand(String command) {
-		return CREATE.toLowerCase().equals(command.toLowerCase()) ? true : false;
+		boolean result = false;
+		if(CREATE.toLowerCase().equals(command.toLowerCase())) {
+			result = true;
+		}
+		if(CLONE.toLowerCase().equals(command.toLowerCase())) {
+			result = true;
+		}
+		return result;
 	}
 
 	/**

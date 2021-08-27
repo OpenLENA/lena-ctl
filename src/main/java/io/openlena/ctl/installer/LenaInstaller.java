@@ -73,12 +73,41 @@ public abstract class LenaInstaller implements Installer {
 		server.setType(getServerType());
 		InstallInfoUtil.addInstallInfo(server);
 	}
+	
+	/**
+	 * @param serverId
+	 * @param servicePort
+	 * @param path install path
+	 * @param version
+	 * @param hotfix version
+	 */
+	protected void addInstallInfo(String serverId, String servicePort, String path, String version, String hotfix){
+		Server server = new Server();
+		server.setId(serverId);
+		server.setPort(servicePort);
+		server.setPath(path);
+		server.setType(getServerType());
+		server.setVersion(version);
+		server.setHotfix(hotfix);
+		InstallInfoUtil.addInstallInfo(server);
+	}
 
 	/**
 	 * @return serverType
 	 */
 	protected String getServerType() {
 		return installerServerType.getServerType();
+	}
+	
+	/**
+	 * Return install path.
+	 * @param serverId Server ID
+	 * @param servicePort Service Port
+	 * @return Install Directory Name
+	 */
+	public String getTargetDirName(String serverId, String servicePort){
+		//return serverId + "_" + servicePort;
+		return serverId;
 	}
 
 	/**

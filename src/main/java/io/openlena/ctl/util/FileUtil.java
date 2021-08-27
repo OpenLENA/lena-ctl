@@ -17,12 +17,17 @@ package io.openlena.ctl.util;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Reader;
 import java.nio.channels.FileChannel;
+import java.util.Iterator;
+
+import org.apache.commons.io.filefilter.TrueFileFilter;
+import org.apache.commons.io.filefilter.WildcardFileFilter;
 
 import io.openlena.ctl.exception.LenaException;
 
@@ -32,6 +37,7 @@ import io.openlena.ctl.exception.LenaException;
  * @author Pinepond
  */
 public class FileUtil {
+	public static final String lineSeparator = System.getProperty("line.separator");
 	/**
 	 * The values entered as parameters are converted into a single path value.
 	 *
@@ -461,5 +467,123 @@ public class FileUtil {
 		file.setWritable(false, false);
 		file.setWritable(true, true);
 		file.setExecutable(true, false);
+	}
+	
+	/**
+	 * return parent path of the path.
+	 * @param path 
+	 * @return parent path
+	 */
+	public static String getParentPath(String path){
+		return new File(path).getParentFile().getAbsolutePath();
+	}
+	
+	/**
+     * Get wildcards files in dirpath
+     * @param dirpath 디렉토리 경로
+     * @param wildcards 와일드카드 array
+     * @return 파일객체 Array
+     */
+    public static Iterator<File> findFilesByWildcard(String dirpath, String wildcards[]){
+    	return CustomFileUtils.iterateFiles(new File(dirpath), new WildcardFileFilter(wildcards), TrueFileFilter.INSTANCE);
+    }
+    
+    /**
+     * Get wildcard file in dirpath
+     * @param dirpath 디렉토리 경로
+     * @param wildcard 와일드카드
+     * @return 파일객체 Array
+     */
+    public static Iterator<File> findFilesByWildcard(String dirpath, String wildcard){
+    	return findFilesByWildcard(dirpath, new String[]{wildcard});
+    }
+
+    /**
+     * Delete list of wildcards in dirpath.
+     * @param dirpath
+     * @param wildcards
+     */
+    public static void deleteFilesByWildcard(String dirpath, String wildcards[]){
+    	Iterator<File> it = findFilesByWildcard(dirpath, wildcards);
+    	while(it.hasNext()){
+    		delete(it.next());
+    	}
+    }
+    
+    /**
+     * Delete the wildcards in dirpath.
+     * @param dirpath
+     * @param wildcard
+     */
+    public static void deleteFilesByWildcard(String dirpath, String wildcard){
+    	deleteFilesByWildcard(dirpath, new String[]{wildcard});
+    }
+    
+    /**
+     * Set variable in the shell.
+     * @param shellFilePath
+     * @param name
+     * @param value
+     */
+	public static void setShellVariableWithoutException(String shellFilePath, String name, String value){
+		try{
+			setShellVariable(shellFilePath, name, value);
+		}
+		catch(Throwable e){
+			// do nothing
+		}
+	}
+	
+	/**
+     * Get variable in the shell.
+     * @param shellFilePath shell path
+     * @param name 
+     * @return value of variable
+     */
+	public static String getShellVariable(String shellFilePath, String name){
+		String variableString = getShellVariableString(shellFilePath, name);
+		String nameAndValueArray[] = variableString.split("=");
+		
+		if(nameAndValueArray.length != 2){
+			return null;
+		}
+		
+		String curValue = nameAndValueArray[1].trim();
+		
+		return curValue;
+	}
+	
+	/**
+	 * Append string to file
+	 * @param targetFilePath
+	 * @param appendStr
+	 */
+    public static void appendStringToFile(String targetFilePath, String appendStr){
+        FileOutputStream fos = null;
+        boolean append = exists(targetFilePath);
+        try {
+        	fos = new FileOutputStream(targetFilePath, append);
+        	if(append){
+        		fos.write(lineSeparator.getBytes());
+        	}
+    		fos.write(appendStr.getBytes());
+        } catch (IOException ex) {
+        	throw new LenaException("Fail to append string to : '" + targetFilePath + "'", ex);
+        } finally {
+        	close(fos);
+        }
+    }
+    
+    /**
+	 * Create directory
+	 * @param path
+	 * @return
+	 */
+	public static boolean mkdirs(String path) {
+		File f = new File(path);
+		if (!f.exists())
+			return f.mkdirs();
+		else
+			return true;
 	}
 }

@@ -18,6 +18,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import io.openlena.ctl.exception.LenaException;
+
 /**
  * General System utilities.
  *
@@ -53,5 +55,40 @@ public class SystemUtil {
 		String dateStr = df.format(new Date());
 
 		return dateStr;
+	}
+	
+	/**
+	 * default jvmRoute명을 생성하여 반환한다.	
+	 * @param hostname
+	 * @param servicePort
+	 * @return
+	 */
+	public static String getDefaultJvmRoute(String hostname, String servicePort){
+		StringBuilder jvmRoute = new StringBuilder();
+		
+		// generate value for hostname
+		String md5Hostname = CipherUtil.md5(hostname);
+		int md5CutLength = 12;
+		if(md5Hostname.length() > md5CutLength){
+			md5Hostname = md5Hostname.substring(0, md5CutLength);
+		}
+		jvmRoute.append(md5Hostname);
+
+		// generate value for port
+		if(!StringUtil.isNumeric(servicePort)){
+			throw new LenaException("Service Port should be numeric.");
+		}
+		jvmRoute.append(new StringBuilder().append(Integer.valueOf(servicePort) * 2).reverse());
+		
+		return jvmRoute.toString();
+	}
+	
+	/**
+	 * default jvmRoute명을 생성하여 반환한다.	
+	 * @param servicePort
+	 * @return
+	 */
+	public static String getDefaultJvmRoute(String servicePort){
+		return getDefaultJvmRoute(EnvUtil.getHostname(), servicePort);
 	}
 }

@@ -121,4 +121,46 @@ public class InstallInfoUtil {
 
 		return element;
 	}
+	
+	/**
+	 * Return service port of the server id
+	 * @param serverId
+	 * @return port
+	 */
+	public static String getServicePort(String serverId) {
+		return XmlUtil.getValueByTagName(getServerElement(serverId), "port");
+	}
+	
+	/**
+	 * Return Server object of server id
+	 * @param serverId
+	 * @return
+	 */
+	public static Server getServer(String serverId){
+		Element serverElement = getServerElement(serverId);
+		if(serverElement == null){
+			throw new LenaException("There is no installed server '" + serverId + "'");
+		}
+		return getServerByElement(serverElement);
+	}
+	
+	/**
+	 * Return Server object of server element
+	 * @param serverElement
+	 * @return
+	 */
+	private static Server getServerByElement(Element serverElement){
+		Server server = new Server();
+		server.setId(XmlUtil.getValueByTagName(serverElement, "id"));
+		server.setPort(XmlUtil.getValueByTagName(serverElement, "port"));
+		server.setType(XmlUtil.getValueByTagName(serverElement, "type"));
+		server.setPath(XmlUtil.getValueByTagName(serverElement, "path"));
+        server.setRecovery(XmlUtil.getValueByTagName(serverElement, "recovery"));
+		server.setVersion(XmlUtil.getValueByTagName(serverElement, "version"));
+		server.setCdate(XmlUtil.getValueByTagName(serverElement, "cdate"));
+		server.setUdate(XmlUtil.getValueByTagName(serverElement, "udate"));
+		server.setHotfix(XmlUtil.getValueByTagName(serverElement, "hotfix"));
+		
+		return server;
+	}
 }

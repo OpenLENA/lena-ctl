@@ -46,12 +46,15 @@ public class InstallerMapper {
 			switch (installerCommandType) {
 			case CREATE:
 				return new LenaWebCreateInstaller(installerCommandType, installerServerType);
-
+			case CLONE:
+//				return new LenaWebServerCloneInstaller(installCommandType, installServerType);
 			}
 		case LENA_WAS:
 			switch (installerCommandType) {
-			case CREATE:
-				return new LenaWasCreateInstaller(installerCommandType, installerServerType);
+				case CREATE:
+					return new LenaWasCreateInstaller(installerCommandType, installerServerType);
+				case CLONE:
+					return new LenaWasServerCloneInstaller(installerCommandType, installerServerType);
 			}
 		}
 		return null;

@@ -42,4 +42,36 @@ public class StringUtil {
 		}
 		return true;
 	}
+	
+	/**
+	 * Check CharSequence is numeric or not
+	 * @param CharSequence
+	 * @return true or false
+	 */
+	public static boolean isNumeric(CharSequence cs) {
+		if (cs == null || cs.length() == 0) {
+			return false;
+		}
+		int sz = cs.length();
+		for (int i = 0; i < sz; i++) {
+			if (!Character.isDigit(cs.charAt(i))) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * Check csArray is numeric or not
+	 * @param CharSequence
+	 * @return true or false
+	 */
+	public static boolean isNumeric(CharSequence ... csArray) {
+		for(CharSequence cs : csArray){
+			if(!isNumeric(cs)){
+				return false;
+			}
+		}
+		return true;
+	}
 }

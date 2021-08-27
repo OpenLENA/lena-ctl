@@ -22,6 +22,7 @@ package io.openlena.ctl.common;
 public class CommandCtl {
 	public static final String INSTALLER = "INSTALLER";
 	public static final String CONFIGURATOR = "CONFIGURATOR";
+	public static final String EXECUTOR = "EXECUTOR";
 
 	InstallCommandCtl installCommandCtl = null;
 

@@ -32,8 +32,15 @@ import java.io.OutputStream;
 import java.math.BigInteger;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.filefilter.DirectoryFileFilter;
+import org.apache.commons.io.filefilter.FalseFileFilter;
+import org.apache.commons.io.filefilter.FileFilterUtils;
+import org.apache.commons.io.filefilter.IOFileFilter;
+import org.apache.commons.io.filefilter.WildcardFileFilter;
 
 /**
  * General file manipulation utilities.
@@ -857,4 +864,132 @@ public class CustomFileUtils {
 		}
 	}
 
+	/**
+     * Allows iteration over the files in given directory (and optionally
+     * its subdirectories).
+     * <p>
+     * All files found are filtered by an IOFileFilter. This method is
+     * based on {@link #listFiles(File, IOFileFilter, IOFileFilter)},
+     * which supports Iterable ('foreach' loop).
+     * <p>
+     * @param directory  the directory to search in
+     * @param fileFilter  filter to apply when finding files.
+     * @param dirFilter  optional filter to apply when finding subdirectories.
+     * If this parameter is <code>null</code>, subdirectories will not be included in the
+     * search. Use TrueFileFilter.INSTANCE to match all directories.
+     * @return an iterator of java.io.File for the matching files
+     * @see org.apache.commons.io.filefilter.FileFilterUtils
+     * @see org.apache.commons.io.filefilter.NameFileFilter
+     * @since 1.2
+     */
+    public static Iterator<File> iterateFiles(
+            File directory, IOFileFilter fileFilter, IOFileFilter dirFilter) {
+        return listFiles(directory, fileFilter, dirFilter).iterator();
+    }
+    
+    /**
+     * Finds files within a given directory (and optionally its
+     * subdirectories). All files found are filtered by an IOFileFilter.
+     * <p>
+     * If your search should recurse into subdirectories you can pass in
+     * an IOFileFilter for directories. You don't need to bind a
+     * DirectoryFileFilter (via logical AND) to this filter. This method does
+     * that for you.
+     * <p>
+     * An example: If you want to search through all directories called
+     * "temp" you pass in <code>FileFilterUtils.NameFileFilter("temp")</code>
+     * <p>
+     * Another common usage of this method is find files in a directory
+     * tree but ignoring the directories generated CVS. You can simply pass
+     * in <code>FileFilterUtils.makeCVSAware(null)</code>.
+     *
+     * @param directory  the directory to search in
+     * @param fileFilter  filter to apply when finding files.
+     * @param dirFilter  optional filter to apply when finding subdirectories.
+     * If this parameter is <code>null</code>, subdirectories will not be included in the
+     * search. Use TrueFileFilter.INSTANCE to match all directories.
+     * @return an collection of java.io.File with the matching files
+     * @see org.apache.commons.io.filefilter.FileFilterUtils
+     * @see org.apache.commons.io.filefilter.NameFileFilter
+     */
+    public static Collection<File> listFiles(
+            File directory, IOFileFilter fileFilter, IOFileFilter dirFilter) {
+        validateListFilesParameters(directory, fileFilter);
+
+        IOFileFilter effFileFilter = setUpEffectiveFileFilter(fileFilter);
+        IOFileFilter effDirFilter = setUpEffectiveDirFilter(dirFilter);
+
+        //Find files
+        Collection<File> files = new java.util.LinkedList<File>();
+        innerListFiles(files, directory,
+            FileFilterUtils.or(effFileFilter, effDirFilter), false);
+        return files;
+    }
+    
+    /**
+     * Validates the given arguments.
+     * <ul>
+     * <li>Throws {@link IllegalArgumentException} if {@code directory} is not a directory</li>
+     * <li>Throws {@link NullPointerException} if {@code fileFilter} is null</li>
+     * </ul>
+     * 
+     * @param directory The File to test
+     * @param fileFilter The IOFileFilter to test
+     */
+    private static void validateListFilesParameters(File directory, IOFileFilter fileFilter) {
+        if (!directory.isDirectory()) {
+            throw new IllegalArgumentException("Parameter 'directory' is not a directory");
+        }
+        if (fileFilter == null) {
+            throw new NullPointerException("Parameter 'fileFilter' is null");
+        }
+    }
+    
+    /**
+     * Returns a filter that accepts files in addition to the {@link File} objects accepted by the given filter.
+     * 
+     * @param fileFilter a base filter to add to
+     * @return a filter that accepts files 
+     */
+    private static IOFileFilter setUpEffectiveFileFilter(IOFileFilter fileFilter) {
+        return FileFilterUtils.and(fileFilter, FileFilterUtils.notFileFilter(DirectoryFileFilter.INSTANCE));
+    }
+
+    /**
+     * Returns a filter that accepts directories in addition to the {@link File} objects accepted by the given filter.
+     * 
+     * @param dirFilter a base filter to add to
+     * @return a filter that accepts directories 
+     */
+    private static IOFileFilter setUpEffectiveDirFilter(IOFileFilter dirFilter) {
+        return dirFilter == null ? FalseFileFilter.INSTANCE : FileFilterUtils.and(dirFilter,
+                DirectoryFileFilter.INSTANCE);
+    }
+
+    /**
+     * Finds files within a given directory (and optionally its
+     * subdirectories). All files found are filtered by an IOFileFilter.
+     *
+     * @param files the collection of files found.
+     * @param directory the directory to search in.
+     * @param filter the filter to apply to files and directories.
+     * @param includeSubDirectories indicates if will include the subdirectories themselves
+     */
+    private static void innerListFiles(Collection<File> files, File directory,
+            IOFileFilter filter, boolean includeSubDirectories) {
+        File[] found = directory.listFiles((FileFilter) filter);
+        
+        if (found != null) {
+            for (File file : found) {
+                if (file.isDirectory()) {
+                    if (includeSubDirectories) {
+                        files.add(file);
+                    }
+                    innerListFiles(files, file, filter, includeSubDirectories);
+                } else {
+                    files.add(file);
+                }
+            }
+        }
+    }
 }

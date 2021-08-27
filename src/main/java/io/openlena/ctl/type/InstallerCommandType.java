@@ -20,7 +20,8 @@ package io.openlena.ctl.type;
  *
  */
 public enum InstallerCommandType {
-	CREATE("create");
+	CREATE("create"),
+	CLONE("clone");
 
 	private String command;
 

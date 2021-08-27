@@ -24,9 +24,11 @@ public class Server {
 	private String port;
 	private String type;
 	private String path;
+	private String recovery;
 	private String version;
 	private String cdate;
 	private String udate;
+	private String hotfix;
 
 	/**
 	 * @return id
@@ -83,6 +85,20 @@ public class Server {
 	public void setPath(String path) {
 		this.path = path;
 	}
+	
+	/**
+	 * @return recovery
+	 */
+	public String getRecovery() {
+		return recovery;
+	}
+
+	/**
+	 * @param recovery
+	 */
+	public void setRecovery(String recovery) {
+		this.recovery = recovery;
+	}
 
 	/**
 	 * @return version
@@ -124,6 +140,20 @@ public class Server {
 	 */
 	public void setUdate(String udate) {
 		this.udate = udate;
+	}
+	
+	/**
+	 * @return hotfix
+	 */
+	public String getHotfix() {
+		return hotfix;
+	}
+
+	/**
+	 * @param hotfix
+	 */
+	public void setHotfix(String hotfix) {
+		this.hotfix = hotfix;
 	}
 
 }
