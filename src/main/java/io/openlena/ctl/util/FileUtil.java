@@ -586,4 +586,50 @@ public class FileUtil {
 		else
 			return true;
 	}
+	
+
+    /**
+     * child경로가 base경로의 subdirectory인지 확인하고 subdirectory인 경우 true, 아닌 경우 false를 리턴한다.
+     * @param base
+     * @param child
+     * @return
+     */
+    public static boolean isSubDirectory(String base, String child){
+    	if(base == null || child == null){
+    		return false;
+    	}
+    	
+    	try{
+	    	String baseCanonicalPath = getCanonicalPath(base);
+	    	String childCanonicalPath = getCanonicalPath(child);
+	    	
+	    	if(childCanonicalPath.startsWith(baseCanonicalPath)){
+	    		return true;
+	    	}
+    	}
+    	catch(Exception e){
+    		if(child.startsWith(base)){
+    			return true;
+    		}
+    	}
+    	
+	    return false;
+    }
+    
+    /**
+	 * path의 canonicalPath를 리턴한다.
+	 * @param path 입력경로
+	 * @return canocialPath
+	 */
+	public static String getCanonicalPath(String path){
+		String canonicalPath = null;
+		try{
+			canonicalPath = new File(path).getCanonicalPath();
+		}
+		catch(Throwable e){
+			new LenaException(e);
+		}
+		
+		return canonicalPath;
+	}
 }
