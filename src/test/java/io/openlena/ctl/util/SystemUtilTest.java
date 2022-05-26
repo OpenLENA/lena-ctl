@@ -5,6 +5,8 @@ import java.util.Date;
 
 import org.junit.Test;
 
+import io.lat.ctl.util.SystemUtil;
+
 import static org.junit.Assert.*;
 
 public class SystemUtilTest {

@@ -28,6 +28,7 @@ import org.apache.commons.io.DirectoryWalker;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.filefilter.NameFileFilter;
 
+import io.lat.ctl.util.CustomFileUtils;
 import io.openlena.ctl.util.testtools.FileBasedTestCase;
 
 /**

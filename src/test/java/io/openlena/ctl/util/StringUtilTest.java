@@ -5,6 +5,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import io.lat.ctl.util.StringUtil;
+
 public class StringUtilTest {
 
 	@Test

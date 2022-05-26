@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import io.lat.ctl.type.InstallerCommandType;
+
 public class InstallerCommandTypeTest {
 
 	@Test

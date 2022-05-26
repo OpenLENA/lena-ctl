@@ -10,9 +10,13 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
-import io.openlena.ctl.common.vo.Server;
-import io.openlena.ctl.exception.LenaException;
-import io.openlena.ctl.resolver.XpathVariable;
+import io.lat.ctl.common.vo.Server;
+import io.lat.ctl.exception.LatException;
+import io.lat.ctl.resolver.XpathVariable;
+import io.lat.ctl.util.CustomFileUtils;
+import io.lat.ctl.util.FileUtil;
+import io.lat.ctl.util.InstallInfoUtil;
+import io.lat.ctl.util.XmlUtil;
 import io.openlena.ctl.util.testtools.FileBasedTestCase;
 import org.junit.Before;
 import org.junit.Test;
@@ -97,7 +101,7 @@ public class InstallInfoUtilTest extends FileBasedTestCase {
 			element = (Element) XmlUtil.xpathEvaluate("//install/servers/server[id=$id]", document, XPathConstants.NODE, xpath, new XpathVariable("id", serverId));
 		}
 		catch (XPathExpressionException e) {
-			throw new LenaException("Errors in release xml file", e);
+			throw new LatException("Errors in release xml file", e);
 		}
 
 		String resultServerId = XmlUtil.getValueByTagName(element, "id");

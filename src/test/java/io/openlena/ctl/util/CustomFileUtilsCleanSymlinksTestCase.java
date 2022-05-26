@@ -20,6 +20,7 @@ import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 
+import io.lat.ctl.util.CustomFileUtils;
 import io.openlena.ctl.util.testtools.FileBasedTestCase;
 
 /**

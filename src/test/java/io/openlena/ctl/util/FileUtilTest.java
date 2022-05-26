@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.openlena.ctl.exception.LenaException;
+import io.lat.ctl.exception.LatException;
+import io.lat.ctl.util.CustomFileUtils;
+import io.lat.ctl.util.FileUtil;
 import io.openlena.ctl.util.testtools.FileBasedTestCase;
 import org.junit.Test;
 
@@ -95,7 +97,7 @@ public class FileUtilTest extends FileBasedTestCase {
 		testFile2.createNewFile();
 
 		// set shell variable - variable doesn't exist in shell file
-		LenaException exception = assertThrows(LenaException.class, () -> FileUtil.setShellVariable(testFile2.getPath(), variable, testValue));
+		LatException exception = assertThrows(LatException.class, () -> FileUtil.setShellVariable(testFile2.getPath(), variable, testValue));
 
 		// check result
 		assertEquals("Fail to set variable '" + variable + "' : '" + testFile2.getPath() + "'", exception.getMessage());
@@ -113,7 +115,7 @@ public class FileUtilTest extends FileBasedTestCase {
 		File testFile = new File(top, "test.sh");
 
 		// set shell variable - variable doesn't exist in shell file
-		LenaException exception = assertThrows(LenaException.class, () -> FileUtil.setShellVariable(testFile.getPath(), variable, testValue));
+		LatException exception = assertThrows(LatException.class, () -> FileUtil.setShellVariable(testFile.getPath(), variable, testValue));
 
 		// check result
 		assertEquals("Fail to read file : '" + testFile.getAbsolutePath() + "'", exception.getMessage());
@@ -328,7 +330,7 @@ public class FileUtilTest extends FileBasedTestCase {
 		File testFile3 = new File(top, "test3.txt");
 
 		// readFileToString
-		LenaException exception = assertThrows(LenaException.class, () -> FileUtil.readFileToString(testFile3.getPath()));
+		LatException exception = assertThrows(LatException.class, () -> FileUtil.readFileToString(testFile3.getPath()));
 
 		// check result
 		assertEquals("Failed to read file '" + testFile3.getAbsolutePath() + "'", exception.getMessage());
@@ -356,7 +358,7 @@ public class FileUtilTest extends FileBasedTestCase {
 		File testFile2 = new File(top, "test2.txt");
 
 		// readFileToString
-		LenaException exception = assertThrows(LenaException.class, () -> FileUtil.writeStringToFile(testFile2, "test", "unknown_encoding"));
+		LatException exception = assertThrows(LatException.class, () -> FileUtil.writeStringToFile(testFile2, "test", "unknown_encoding"));
 
 		// check result
 		assertEquals("Failed to write file '" + testFile2.getAbsolutePath() + "'", exception.getMessage());

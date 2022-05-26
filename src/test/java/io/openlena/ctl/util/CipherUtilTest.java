@@ -2,6 +2,8 @@ package io.openlena.ctl.util;
 
 import org.junit.Test;
 
+import io.lat.ctl.util.CipherUtil;
+
 import static org.junit.Assert.*;
 
 /**

@@ -29,7 +29,7 @@ import java.util.Arrays;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.output.ByteArrayOutputStream;
 
-import io.openlena.ctl.util.CustomFileUtils;
+import io.lat.ctl.util.CustomFileUtils;
 import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
 

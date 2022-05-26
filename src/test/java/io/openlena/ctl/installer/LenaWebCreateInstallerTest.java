@@ -6,9 +6,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import io.openlena.ctl.type.InstallerCommandType;
-import io.openlena.ctl.type.InstallerServerType;
-import io.openlena.ctl.util.CustomFileUtils;
+import io.lat.ctl.installer.LenaWebCreateInstaller;
+import io.lat.ctl.type.InstallerCommandType;
+import io.lat.ctl.type.InstallerServerType;
+import io.lat.ctl.util.CustomFileUtils;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;

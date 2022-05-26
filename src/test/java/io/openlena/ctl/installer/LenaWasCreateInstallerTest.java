@@ -6,9 +6,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import io.openlena.ctl.type.InstallerCommandType;
-import io.openlena.ctl.type.InstallerServerType;
-import io.openlena.ctl.util.CustomFileUtils;
+import io.lat.ctl.installer.LatWasCreateInstaller;
+import io.lat.ctl.type.InstallerCommandType;
+import io.lat.ctl.type.InstallerServerType;
+import io.lat.ctl.util.CustomFileUtils;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -46,7 +48,7 @@ public class LenaWasCreateInstallerTest {
 //		String jvmRoute = "jvmRoute";
 //
 //		systemInMock.provideLines(id, port, user, installPath, ajpAddr, logPath, jvmRoute);
-//		LenaWasCreateInstaller installer = new LenaWasCreateInstaller(InstallerCommandType.CREATE, InstallerServerType.LENA_WAS);
+//		LatWasCreateInstaller installer = new LatWasCreateInstaller(InstallerCommandType.CREATE, InstallerServerType.LENA_WAS);
 //		installer.execute();
 
 	}
@@ -62,7 +64,7 @@ public class LenaWasCreateInstallerTest {
 		String jvmRoute = "jvmRoute";
 
 		systemInMock.provideLines(id, port, user, installPath, ajpAddr, logPath, jvmRoute);
-		LenaWasCreateInstaller installer = new LenaWasCreateInstaller(InstallerCommandType.CREATE, InstallerServerType.LENA_WAS);
+		LatWasCreateInstaller installer = new LatWasCreateInstaller(InstallerCommandType.CREATE, InstallerServerType.LENA_WAS);
 		HashMap<String, String> result = installer.getServerInfoFromUser();
 
 		assertEquals(id, result.get("SERVER_ID"));

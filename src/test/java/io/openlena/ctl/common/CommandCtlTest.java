@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import io.lat.ctl.common.CommandCtl;
+
 public class CommandCtlTest {
 	
 	public static final String INSTALLER = "INSTALLER";
