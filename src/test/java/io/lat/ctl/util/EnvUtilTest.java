@@ -26,17 +26,17 @@ public class EnvUtilTest  {
 
 	@Before
 	public void setUp() throws Exception {
-		System.setProperty("lena.home", FileBasedTestCase.getTestDirectory().getCanonicalPath());
+		System.setProperty("lat.home", FileBasedTestCase.getTestDirectory().getCanonicalPath());
 		System.setProperty("hostname", "hostname_unit_test");
 		System.setProperty("run_user", System.getProperty("user.name"));
 
 		javaHome = System.getProperty("java.home");
 		userJavaHome = System.getProperty("user_java.home", javaHome);
-		latHome = System.getProperty("lena.home");
+		latHome = System.getProperty("lat.home");
 		hostname = System.getProperty("hostname");
 		runUser = System.getProperty("run_user");
 		userHome = System.getProperty("user.home");
-		logHome = System.getProperty("log.home", FileUtil.getConcatPath(latHome, "logs", "lena-installer"));
+		logHome = System.getProperty("log.home", FileUtil.getConcatPath(latHome, "logs", "lat-installer"));
 		resultFormat = System.getProperty("result.format", "text");
 		rootUserAllowed = (System.getProperty("root_user.allowed", "false").equals("true"));
 	}
