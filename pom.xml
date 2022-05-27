@@ -2,12 +2,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>io.openlena</groupId>
-    <artifactId>lena-ctl</artifactId>
+    <groupId>io.atlena</groupId>
+    <artifactId>lat-ctl</artifactId>
     <version>0.2.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>lena-ctl</name>
+    <name>lat-ctl</name>
     <url>http://maven.apache.org</url>
 
     <properties>
@@ -15,7 +15,7 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
 
-        <sonar.projectKey>OpenLENA_lena-ctl</sonar.projectKey>
+        <sonar.projectKey>OpenLENA_lat-ctl</sonar.projectKey>
         <sonar.organization>openlena</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
@@ -62,7 +62,7 @@
 				<version>2.22.2</version>
 				<configuration>
 					<systemPropertyVariables>
-						<lena.home>${project.build.directory}/../test/io/</lena.home>
+						<lat.home>${project.build.directory}/../test/io/</lat.home>
 						<hostname>hostname_unit_test</hostname>
 						<run_user>${user.name}</run_user>
 						<buildDirectory>${project.build.directory}</buildDirectory>
@@ -139,8 +139,8 @@
     <distributionManagement>
         <repository>
             <id>github</id>
-            <name>archisol</name>
-            <url>https://maven.pkg.github.com/openlena/lena-ctl</url>
+            <name>atlena</name>
+            <url>https://maven.pkg.github.com/atlena/lat-ctl</url>
         </repository>
     </distributionManagement>
 </project>
