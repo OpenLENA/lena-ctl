@@ -1,4 +1,4 @@
-package io.openlena.ctl.util;
+package io.lat.ctl.util;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,17 +13,10 @@ import javax.xml.xpath.XPathFactory;
 import io.lat.ctl.common.vo.Server;
 import io.lat.ctl.exception.LatException;
 import io.lat.ctl.resolver.XpathVariable;
-import io.lat.ctl.util.CustomFileUtils;
-import io.lat.ctl.util.FileUtil;
-import io.lat.ctl.util.InstallInfoUtil;
-import io.lat.ctl.util.XmlUtil;
-import io.openlena.ctl.util.testtools.FileBasedTestCase;
-import org.junit.Before;
+import io.lat.ctl.util.testtools.FileBasedTestCase;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-
-import static org.junit.Assert.*;
 
 /**
  * Test InstallInfoUtil Class

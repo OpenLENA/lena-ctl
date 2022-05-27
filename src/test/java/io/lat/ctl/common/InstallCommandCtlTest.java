@@ -1,4 +1,4 @@
-package io.openlena.ctl.common;
+package io.lat.ctl.common;
 
 import static org.junit.Assert.*;
 

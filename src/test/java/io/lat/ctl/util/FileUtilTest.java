@@ -1,4 +1,4 @@
-package io.openlena.ctl.util;
+package io.lat.ctl.util;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,9 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.lat.ctl.exception.LatException;
-import io.lat.ctl.util.CustomFileUtils;
-import io.lat.ctl.util.FileUtil;
-import io.openlena.ctl.util.testtools.FileBasedTestCase;
+import io.lat.ctl.util.testtools.FileBasedTestCase;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

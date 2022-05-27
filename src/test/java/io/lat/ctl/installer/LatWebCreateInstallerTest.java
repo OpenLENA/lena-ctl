@@ -1,4 +1,4 @@
-package io.openlena.ctl.installer;
+package io.lat.ctl.installer;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import io.lat.ctl.installer.LenaWebCreateInstaller;
+import io.lat.ctl.installer.LatWebCreateInstaller;
 import io.lat.ctl.type.InstallerCommandType;
 import io.lat.ctl.type.InstallerServerType;
 import io.lat.ctl.util.CustomFileUtils;
@@ -20,7 +20,7 @@ import static org.junit.Assert.*;
 
 import org.junit.contrib.java.lang.system.TextFromStandardInputStream;
 
-public class LenaWebCreateInstallerTest {
+public class LatWebCreateInstallerTest {
 
 	final File top = new File("test-installer/");
 
@@ -48,7 +48,7 @@ public class LenaWebCreateInstallerTest {
 		String docPath = installPath + File.separator + "htdocs";
 
 		systemInMock.provideLines(id, port, user, engnPath, installPath, logPath, docPath);
-		LenaWebCreateInstaller installer = new LenaWebCreateInstaller(InstallerCommandType.CREATE, InstallerServerType.LENA_WEB);
+		LatWebCreateInstaller installer = new LatWebCreateInstaller(InstallerCommandType.CREATE, InstallerServerType.APACHE);
 		HashMap<String, String> result = installer.getServerInfoFromUser();
 
 		assertEquals(id, result.get("SERVER_ID"));

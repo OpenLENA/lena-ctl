@@ -12,7 +12,7 @@
  * the License.
  */
 
-package io.openlena.ctl.util.testtools;
+package io.lat.ctl.util.testtools;
 
 import java.io.BufferedOutputStream;
 import java.io.File;

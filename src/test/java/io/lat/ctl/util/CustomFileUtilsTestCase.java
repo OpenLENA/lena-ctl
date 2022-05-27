@@ -12,7 +12,7 @@
  * the License.
  */
 
-package io.openlena.ctl.util;
+package io.lat.ctl.util;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -28,8 +28,7 @@ import org.apache.commons.io.DirectoryWalker;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.filefilter.NameFileFilter;
 
-import io.lat.ctl.util.CustomFileUtils;
-import io.openlena.ctl.util.testtools.FileBasedTestCase;
+import io.lat.ctl.util.testtools.FileBasedTestCase;
 
 /**
  * This is used to test CustomFileUtils for correctness.

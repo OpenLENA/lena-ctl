@@ -1,4 +1,4 @@
-package io.openlena.ctl.installer;
+package io.lat.ctl.installer;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import io.lat.ctl.installer.LatWasCreateInstaller;
 import io.lat.ctl.type.InstallerCommandType;
 import io.lat.ctl.type.InstallerServerType;
 import io.lat.ctl.util.CustomFileUtils;
@@ -20,7 +19,7 @@ import static org.junit.Assert.*;
 
 import org.junit.contrib.java.lang.system.TextFromStandardInputStream;
 
-public class LenaWasCreateInstallerTest {
+public class LatWasCreateInstallerTest {
 
 	final File top = new File("test-installer/");
 
@@ -64,7 +63,7 @@ public class LenaWasCreateInstallerTest {
 		String jvmRoute = "jvmRoute";
 
 		systemInMock.provideLines(id, port, user, installPath, ajpAddr, logPath, jvmRoute);
-		LatWasCreateInstaller installer = new LatWasCreateInstaller(InstallerCommandType.CREATE, InstallerServerType.LENA_WAS);
+		LatWasCreateInstaller installer = new LatWasCreateInstaller(InstallerCommandType.CREATE, InstallerServerType.TOMCAT);
 		HashMap<String, String> result = installer.getServerInfoFromUser();
 
 		assertEquals(id, result.get("SERVER_ID"));

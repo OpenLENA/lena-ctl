@@ -1,4 +1,4 @@
-package io.openlena.ctl.util;
+package io.lat.ctl.util;
 
 import org.junit.Test;
 

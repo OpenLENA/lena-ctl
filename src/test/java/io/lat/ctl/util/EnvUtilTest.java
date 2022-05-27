@@ -1,23 +1,21 @@
-package io.openlena.ctl.util;
+package io.lat.ctl.util;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.lat.ctl.util.EnvUtil;
-import io.lat.ctl.util.FileUtil;
-import io.openlena.ctl.util.testtools.FileBasedTestCase;
+import io.lat.ctl.util.testtools.FileBasedTestCase;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class EnvUtilTest  {
 
 	private String javaHome;
 	private String userJavaHome;
-	private String lenaHome;
+	private String latHome;
 	private String hostname;
 	private String runUser;
 	private String userHome;
@@ -34,11 +32,11 @@ public class EnvUtilTest  {
 
 		javaHome = System.getProperty("java.home");
 		userJavaHome = System.getProperty("user_java.home", javaHome);
-		lenaHome = System.getProperty("lena.home");
+		latHome = System.getProperty("lena.home");
 		hostname = System.getProperty("hostname");
 		runUser = System.getProperty("run_user");
 		userHome = System.getProperty("user.home");
-		logHome = System.getProperty("log.home", FileUtil.getConcatPath(lenaHome, "logs", "lena-installer"));
+		logHome = System.getProperty("log.home", FileUtil.getConcatPath(latHome, "logs", "lena-installer"));
 		resultFormat = System.getProperty("result.format", "text");
 		rootUserAllowed = (System.getProperty("root_user.allowed", "false").equals("true"));
 	}
@@ -56,8 +54,8 @@ public class EnvUtilTest  {
 	}
 
 	@Test
-	public void getLenaHome() throws IOException {
-		assertEquals(lenaHome, new File(EnvUtil.getLenaHome()).getCanonicalPath());
+	public void getLatHome() throws IOException {
+		assertEquals(latHome, new File(EnvUtil.getLatHome()).getCanonicalPath());
 	}
 
 	@Test

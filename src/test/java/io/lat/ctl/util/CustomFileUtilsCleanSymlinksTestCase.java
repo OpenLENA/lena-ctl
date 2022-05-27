@@ -12,16 +12,14 @@
  * the License.
  */
 
-package io.openlena.ctl.util;
+package io.lat.ctl.util;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.lat.ctl.util.testtools.FileBasedTestCase;
 import org.apache.commons.io.FileUtils;
-
-import io.lat.ctl.util.CustomFileUtils;
-import io.openlena.ctl.util.testtools.FileBasedTestCase;
 
 /**
  * Test cases for CustomFileUtils.cleanDirectory() method that involve symlinks.

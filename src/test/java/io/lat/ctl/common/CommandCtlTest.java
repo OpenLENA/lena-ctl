@@ -1,4 +1,4 @@
-package io.openlena.ctl.common;
+package io.lat.ctl.common;
 
 import static org.junit.Assert.*;
 
@@ -15,13 +15,13 @@ public class CommandCtlTest {
 	public void testCommandChecker() {
 		CommandCtl commandCtl = new CommandCtl();
 		String createCommand = "create";
-		String exepctionCommand = "error";
+		String exceptionCommand = "error";
 		
 		// check create command
 		assertEquals(CommandCtl.INSTALLER, commandCtl.commandChecker(createCommand));
 		
 		// not contain command
-		assertEquals("", commandCtl.commandChecker(exepctionCommand));
+		assertEquals("", commandCtl.commandChecker(exceptionCommand));
 	}
 
 }

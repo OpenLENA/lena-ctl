@@ -1,11 +1,9 @@
-package io.openlena.ctl.util;
+package io.lat.ctl.util;
 
 import java.io.File;
 import java.io.IOException;
 
-import io.lat.ctl.util.FileUtil;
-import io.lat.ctl.util.ReleaseInfoUtil;
-import io.openlena.ctl.util.testtools.FileBasedTestCase;
+import io.lat.ctl.util.testtools.FileBasedTestCase;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
