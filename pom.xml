@@ -15,8 +15,8 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
 
-        <sonar.projectKey>OpenLENA_lat-ctl</sonar.projectKey>
-        <sonar.organization>openlena</sonar.organization>
+        <sonar.projectKey>ATLENA_lat-ctl</sonar.projectKey>
+        <sonar.organization>atlena</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
 
