@@ -154,16 +154,16 @@ public abstract class LatInstaller implements Installer {
 		Map<String, String> map = new HashMap<String, String>();
 
 		// lena-was default value
-		map.put("lena-was.service-port", InstallConfigUtil.getProperty("lena-was.service-port.default", "8080"));
-		map.put("lena-was.run-user", InstallConfigUtil.getProperty("lena-was.run-user.default", "lena"));
-		map.put("lena-was.ajp-address", InstallConfigUtil.getProperty("lena-was.ajp-address.default", "127.0.0.1"));
-		map.put("lena-was.jvm-route", InstallConfigUtil.getProperty("lena-was.jvm-route.default", "host1_8180"));
-		map.put("lena-was.template.dirname", InstallConfigUtil.getProperty("lena-was.template.dirname", "base"));
+		map.put("lat-was.service-port", InstallConfigUtil.getProperty("lat-was.service-port.default", "8080"));
+		map.put("lat-was.run-user", InstallConfigUtil.getProperty("lat-was.run-user.default", "lat"));
+		map.put("lat-was.ajp-address", InstallConfigUtil.getProperty("lat-was.ajp-address.default", "127.0.0.1"));
+		map.put("lat-was.jvm-route", InstallConfigUtil.getProperty("lat-was.jvm-route.default", "host1_8180"));
+		map.put("lat-was.template.dirname", InstallConfigUtil.getProperty("lat-was.template.dirname", "base"));
 
 		// lena-web default value
-		map.put("lena-web.service-port", InstallConfigUtil.getProperty("lena-web.service-port.default", "80"));
-		map.put("lena-web.run-user", InstallConfigUtil.getProperty("lena-web.run-user.default", "lenaw"));
-		map.put("lena-web.template.dirname", InstallConfigUtil.getProperty("lena-web.template.dirname", "base"));
+		map.put("lat-web.service-port", InstallConfigUtil.getProperty("lat-web.service-port.default", "80"));
+		map.put("lat-web.run-user", InstallConfigUtil.getProperty("lat-web.run-user.default", "latw"));
+		map.put("lat-web.template.dirname", InstallConfigUtil.getProperty("lat-web.template.dirname", "base"));
 
 		return map;
 	}
