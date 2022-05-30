@@ -24,7 +24,7 @@ jobs:
           #servers: '[{"server":{"id":"github", "username":"seosej@gmail.com", "password":"${{secrets.GITHUB_TOKEN}}"}}]'
           #servers: '[{"server":{"id":"github", "username":"seosej@gmail.com", "password":"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"}}]'
           servers:
-            - id: "github"
+              id: "github"
               username: "seosej@gmail.com"
               password: "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"
       - name: check settings.xml
