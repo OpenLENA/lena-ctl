@@ -21,7 +21,7 @@ jobs:
         with:
           repositories: '[{ "id": "github", "url": "https://maven.pkg.github.com/atlena/*", "snapshots": { "enabled": "true" } }]'
           #servers: ${{secrets.GH_MVN_REPO_USER_INFO}}
-          servers: ${{secrets.GITHUB_TOKEN}}
+          servers: '[{"server":{"id":"github", "username":"seosej@gmail.com", "password":${{secrets.GITHUB_TOKEN}}}}]'
           #servers: '[{"server":{"id":"github", "username":"seosej@gmail.com", "password":"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"}}]'
       - name: check settings.xml
         run: cat ~/.m2/settings.xml
