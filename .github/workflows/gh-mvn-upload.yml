@@ -23,10 +23,10 @@ jobs:
           #servers: ${{secrets.GH_MVN_REPO_USER_INFO}}
           #servers: ${{secrets.GITHUB_TOKEN}}
           servers:
-            - server:
-                - id: github
-                - username: seosej@gmail.com
-                - password: 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
+            server:
+              id: github
+              username: seosej@gmail.com
+              password: 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
       - name: check settings.xml
         run: cat ~/.m2/settings.xml
       - name: Packaging with Maven
