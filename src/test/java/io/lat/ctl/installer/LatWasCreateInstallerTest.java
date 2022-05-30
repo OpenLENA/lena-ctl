@@ -63,7 +63,7 @@ public class LatWasCreateInstallerTest {
 		String jvmRoute = "jvmRoute";
 
 		systemInMock.provideLines(id, port, user, installPath, ajpAddr, logPath, jvmRoute);
-		LatWasCreateInstaller installer = new LatWasCreateInstaller(InstallerCommandType.CREATE, InstallerServerType.TOMCAT);
+		LatWasCreateInstaller installer = new LatWasCreateInstaller(InstallerCommandType.CREATE, InstallerServerType.LAT_WAS);
 		HashMap<String, String> result = installer.getServerInfoFromUser();
 
 		assertEquals(id, result.get("SERVER_ID"));
