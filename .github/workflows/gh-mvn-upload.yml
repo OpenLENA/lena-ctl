@@ -1,6 +1,6 @@
 name: Github Maven Repository Upload
 on:
-  # Triggers the workflow on push or pull request events but only for the main branch
+  # Triggers the workflow on push or pull request events but only for the main brancha
   push:
     branches: [ master ]
   pull_request:
