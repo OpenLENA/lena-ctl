@@ -20,8 +20,8 @@ jobs:
         uses: whelk-io/maven-settings-xml-action@v14
         with:
           repositories: '[{ "id": "github", "url": "https://maven.pkg.github.com/atlena/*", "snapshots": { "enabled": "true" } }]'
-          #servers: ${{secrets.GH_MVN_REPO_USER_INFO}}
-          servers: ${{secrets.GITHUB_TOKEN}}
+          servers: ${{secrets.GH_MVN_REPO_USER_INFO}}
+          #servers: ${{secrets.GITHUB_TOKEN}}
       - name: check settings.xml
         run: cat ~/.m2/settings.xml
       - name: Packaging with Maven
