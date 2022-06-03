@@ -49,7 +49,7 @@ public class InstallerMapper {
 				case CLONE:
 					return new LatWebServerCloneInstaller(installerCommandType, installerServerType);
 			}
-		case LAT_WAS:
+		case TOMCAT:
 			switch (installerCommandType) {
 				case CREATE:
 					return new LatWasCreateInstaller(installerCommandType, installerServerType);

@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  *
  */
 public enum InstallerServerType {
-	LAT_WEB("lat-web"), LAT_WAS("lat-was");
+	LAT_WEB("lat-web"), TOMCAT("tomcat");
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(InstallerServerType.class);
 
