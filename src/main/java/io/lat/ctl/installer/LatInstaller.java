@@ -154,11 +154,11 @@ public abstract class LatInstaller implements Installer {
 		Map<String, String> map = new HashMap<String, String>();
 
 		// lena-was default value
-		map.put("lat-was.service-port", InstallConfigUtil.getProperty("lat-was.service-port.default", "8080"));
-		map.put("lat-was.run-user", InstallConfigUtil.getProperty("lat-was.run-user.default", "lat"));
-		map.put("lat-was.ajp-address", InstallConfigUtil.getProperty("lat-was.ajp-address.default", "127.0.0.1"));
-		map.put("lat-was.jvm-route", InstallConfigUtil.getProperty("lat-was.jvm-route.default", "host1_8180"));
-		map.put("lat-was.template.dirname", InstallConfigUtil.getProperty("lat-was.template.dirname", "base"));
+		map.put("tomcat.service-port", InstallConfigUtil.getProperty("tomcat.service-port.default", "8080"));
+		map.put("tomcat.run-user", InstallConfigUtil.getProperty("tomcat.run-user.default", "lat"));
+		map.put("tomcat.ajp-address", InstallConfigUtil.getProperty("tomcat.ajp-address.default", "127.0.0.1"));
+		map.put("tomcat.jvm-route", InstallConfigUtil.getProperty("tomcat.jvm-route.default", "host1_8180"));
+		map.put("tomcat.template.dirname", InstallConfigUtil.getProperty("tomcat.template.dirname", "base"));
 
 		// lena-web default value
 		map.put("lat-web.service-port", InstallConfigUtil.getProperty("lat-web.service-port.default", "80"));
