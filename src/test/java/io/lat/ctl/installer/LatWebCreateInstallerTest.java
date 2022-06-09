@@ -48,7 +48,7 @@ public class LatWebCreateInstallerTest {
 		String docPath = installPath + File.separator + "htdocs";
 
 		systemInMock.provideLines(id, port, user, engnPath, installPath, logPath, docPath);
-		LatWebCreateInstaller installer = new LatWebCreateInstaller(InstallerCommandType.CREATE, InstallerServerType.LAT_WEB);
+		LatWebCreateInstaller installer = new LatWebCreateInstaller(InstallerCommandType.CREATE, InstallerServerType.APACHE);
 		HashMap<String, String> result = installer.getServerInfoFromUser();
 
 		assertEquals(id, result.get("SERVER_ID"));

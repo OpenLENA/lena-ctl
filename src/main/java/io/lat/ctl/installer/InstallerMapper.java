@@ -42,7 +42,7 @@ public class InstallerMapper {
 		installerCommandType = InstallerCommandType.valueOf(command.toUpperCase());
 
 		switch (installerServerType) {
-		case LAT_WEB:
+		case APACHE:
 			switch (installerCommandType) {
 				case CREATE:
 					return new LatWebCreateInstaller(installerCommandType, installerServerType);
