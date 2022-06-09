@@ -55,7 +55,7 @@ public class LatWasCreateInstaller extends LatInstaller {
 		HashMap<String, String> commandMap = getServerInfoFromUser();
 		String serverId = commandMap.get("SERVER_ID");
 		String servicePort = getParameterValue(commandMap.get("SERVICE_PORT"), getDefaultValue(getServerType() + ".service-port"));
-		String runUser = getParameterValue(commandMap.get("RUN_USER"), getDefaultValue(getServerType() + ".run-user"));
+		String runUser = getParameterValue(commandMap.get("RUN_USER"), EnvUtil.getRunuser());
 		String installRootPath = FileUtil.getConcatPath(EnvUtil.getLatHome(), "servers");
 		String ajpAddress = getParameterValue(commandMap.get("AJP_ADDRESS"), getDefaultValue(getServerType() + ".ajp-address"));
 		String ajpSecret = CipherUtil.md5(serverId);
@@ -133,7 +133,7 @@ public class LatWasCreateInstaller extends LatInstaller {
 		System.out.print("|: ");
 		commandMap.put("SERVICE_PORT", scan.nextLine());
 		System.out.println("| 3. RUN_USER is user running LA:T Server                                            ");
-		System.out.println("|    default : lat                                                                   ");
+		System.out.println("|    default : "+EnvUtil.getRunuser());
 		System.out.print("|: ");
 		commandMap.put("RUN_USER", scan.nextLine());
 		System.out.println("| 4. INSTALL_ROOT_PATH is server root directory in filesystem.                        ");
