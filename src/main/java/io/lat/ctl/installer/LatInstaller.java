@@ -162,9 +162,9 @@ public abstract class LatInstaller implements Installer {
 		map.put("tomcat.template.dirname", InstallConfigUtil.getProperty("tomcat.template.dirname", "base"));
 
 		// lena-web default value
-		map.put("apache.service-port", InstallConfigUtil.getProperty("lat-web.service-port.default", "80"));
-		map.put("apache.run-user", InstallConfigUtil.getProperty("lat-web.run-user.default", "latw"));
-		map.put("apache.template.dirname", InstallConfigUtil.getProperty("lat-web.template.dirname", "base"));
+		map.put("apache.service-port", InstallConfigUtil.getProperty("apache.service-port.default", "80"));
+		map.put("apache.run-user", InstallConfigUtil.getProperty("apache.run-user.default", "latw"));
+		map.put("apache.template.dirname", InstallConfigUtil.getProperty("apache.template.dirname", "base"));
 
 		return map;
 	}

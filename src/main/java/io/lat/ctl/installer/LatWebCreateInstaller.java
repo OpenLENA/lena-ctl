@@ -59,9 +59,10 @@ public class LatWebCreateInstaller extends LatInstaller {
 		String logHome = getParameterValue(commandMap.get("LOG_HOME"), FileUtil.getConcatPath(targetPath, "logs"));
 		String documentRootPath = getParameterValue(commandMap.get("DOCUMENT_ROOT_PATH"), FileUtil.getConcatPath(targetPath, "htdocs"));
 
+		System.out.println("DEPOT PATH =========> "+getDepotPath());
 
 
-			FileUtil.copyDirectory(FileUtil.getConcatPath(getDepotPath(), "template", getDefaultValue(getServerType() + ".template.dirname")), targetPath);
+			FileUtil.copyDirectory(getDepotPath(), targetPath);
 
 			FileUtil.setShellVariable(FileUtil.getConcatPath(targetPath, "env.sh"), "ENGN_HOME", apacheEnginePath);
 			FileUtil.setShellVariable(FileUtil.getConcatPath(targetPath, "env.sh"), "SERVER_ID", serverId);
