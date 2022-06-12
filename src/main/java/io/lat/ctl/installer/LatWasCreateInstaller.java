@@ -63,7 +63,7 @@ public class LatWasCreateInstaller extends LatInstaller {
 		String installRootPath = FileUtil.getConcatPath(EnvUtil.getLatHome(), "instances");
 		String ajpAddress = getParameterValue(commandMap.get("AJP_ADDRESS"), getDefaultValue(getServerType() + ".ajp-address"));
 		String ajpSecret = CipherUtil.md5(serverId);
-		String targetPath = FileUtil.getConcatPath(installRootPath, serverId);
+		String targetPath = FileUtil.getConcatPath(installRootPath, getServerType(),serverId);
 		String logHome = getParameterValue(commandMap.get("LOG_HOME"), FileUtil.getConcatPath(targetPath, "logs"));
 		String jvmRoute = getParameterValue(commandMap.get("JVM_ROUTE"), getDefaultValue(getServerType() + ".jvm-route"));
 
