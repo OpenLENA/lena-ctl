@@ -105,15 +105,15 @@ public class LatWebCreateInstaller extends LatInstaller {
 		System.out.print("|: ");
 		commandMap.put("APACHE_ENGINE_PATH", scan.nextLine());
 		System.out.println("| 5. INSTALL_ROOT_PATH is Apache Server root directory in filesystem.                 ");
-		System.out.println("|    default : " + FileUtil.getConcatPath(EnvUtil.getLatHome(), "servers"));
+		System.out.println("|    default : " + FileUtil.getConcatPath(EnvUtil.getLatHome(), "instances"));
 		System.out.print("|: ");
 		commandMap.put("INSTALL_ROOT_PATH", scan.nextLine());
 		System.out.println("| 6. LOG_HOME is Apache Server's log directory in filesystem.                         ");
-		System.out.println("|    default : " + FileUtil.getConcatPath(EnvUtil.getLatHome(), "servers", commandMap.get("SERVER_ID"), "logs"));
+		System.out.println("|    default : " + FileUtil.getConcatPath(EnvUtil.getLatHome(), "instances", commandMap.get("SERVER_ID"), "logs"));
 		System.out.print("|: ");
 		commandMap.put("LOG_HOME", scan.nextLine());
 		System.out.println("| 7. DOCUMENT_ROOT_PATH is Apache Server's contents directory in filesystem.          ");
-		System.out.println("|    default : " + FileUtil.getConcatPath(EnvUtil.getLatHome(), "servers", commandMap.get("SERVER_ID"), "htdocs"));
+		System.out.println("|    default : " + FileUtil.getConcatPath(EnvUtil.getLatHome(), "instances", commandMap.get("SERVER_ID"), "htdocs"));
 		System.out.print("|: ");
 		commandMap.put("DOCUMENT_ROOT_PATH", scan.nextLine());
 		System.out.println("+-------------------------------------------------------------------------------------");
