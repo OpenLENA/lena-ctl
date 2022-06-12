@@ -120,10 +120,10 @@ public class LatWebCreateInstaller extends LatInstaller {
 		return commandMap;
 	}
 
-	public String getEngineVersion() throws IOException {
+	public static String getEngineVersion() throws IOException {
 		String[] cmd;
 		if(System.getProperty("os.name").indexOf("Windows") > -1){
-			cmd=new String[]{"cmd","/c","ls -1r --sort=version "+FileUtil.getConcatPath(EnvUtil.getLatHome(),"engines","apache")};
+			cmd=new String[]{"cmd","/c","ls -1r --sort=version "+FileUtil.getConcatPath(EnvUtil.getLatHome(),"engines", "apache")};
 		}else{
 			cmd=new String[]{"/bin/sh","-c","ls -1r --sort=version "+FileUtil.getConcatPath(EnvUtil.getLatHome(),"engines","apache")};
 		}

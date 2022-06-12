@@ -25,6 +25,10 @@ import io.lat.ctl.resolver.XpathVariable;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import java.io.IOException;
+
+import static io.lat.ctl.installer.LatWebCreateInstaller.getEngineVersion;
+
 /**
  * Release info utilities.
  *
@@ -38,8 +42,10 @@ public class ReleaseInfoUtil {
 	 * @param serverType the server type
 	 * @return depot path
 	 */
-	public static String getDepotPath(String serverType) {
-		return FileUtil.getConcatPath(EnvUtil.getLatHome(), "depot", serverType, getModuleVersion(serverType));
+	public static String getDepotPath(String serverType) throws IOException {
+		String[] split = getEngineVersion().split(".");
+
+		return FileUtil.getConcatPath(EnvUtil.getLatHome(), "lat", "depot", "template", serverType, "base-"+split[0]+"."+split[1]);
 	}
 
 	/**
@@ -81,11 +87,11 @@ public class ReleaseInfoUtil {
 	/**
 	 * Search the path of the release-info.xml file.
 	 *
-	 * @param lenaHome the lena home
+	 * @param latHome the lena home
 	 * @return release info file path
 	 */
-	public static String getReleaseInfoFilePath(String lenaHome) {
-		String argoReleaseFilePath = FileUtil.getConcatPath(lenaHome, "etc", "info", "release-info.xml");
+	public static String getReleaseInfoFilePath(String latHome) {
+		String argoReleaseFilePath = FileUtil.getConcatPath(latHome, "lat", "etc", "info", "release-info.xml");
 		if (!FileUtil.exists(argoReleaseFilePath)) {
 			throw new LatException("There is no release-info.xml file");
 		}
