@@ -38,7 +38,7 @@ public class LatWebCreateInstallerTest {
 	}
 
 	@Test
-	public void getServerInfoFromUser() {
+	public void getServerInfoFromUser() throws IOException {
 		String id = "server_id";
 		String port = "7080";
 		String user = "lenaw";
