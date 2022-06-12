@@ -142,7 +142,7 @@ public class LatWasCreateInstaller extends LatInstaller {
 		System.out.print("|: ");
 		commandMap.put("RUN_USER", scan.nextLine());
 		System.out.println("| 4. INSTALL_ROOT_PATH is server root directory in filesystem.                        ");
-		System.out.println("|    default : " + FileUtil.getConcatPath(EnvUtil.getLatHome(), "instances"));
+		System.out.println("|    default : " + FileUtil.getConcatPath(EnvUtil.getLatHome(), "instances", getServerType()));
 		System.out.print("|: ");
 		commandMap.put("INSTALL_ROOT_PATH", scan.nextLine());
 		System.out.println("| 5. AJP_ADDRESS is IP addresss used for listening on the specified port.             ");
@@ -151,7 +151,7 @@ public class LatWasCreateInstaller extends LatInstaller {
 		commandMap.put("AJP_ADDRESS", scan.nextLine());
 		System.out.println("| 6. LOG_HOME is LA:T Server's log directory in filesystem.                          ");
 		System.out.println("|    If you don't want to use default log directory input your custom log home prefix.");
-		System.out.println("|    default : " + FileUtil.getConcatPath(EnvUtil.getLatHome(), "instances", commandMap.get("SERVER_ID"), "logs"));
+		System.out.println("|    default : " + FileUtil.getConcatPath(EnvUtil.getLatHome(), "instances",getServerType(), commandMap.get("SERVER_ID"), "logs"));
 		System.out.print("|: ");
 		commandMap.put("LOG_HOME", scan.nextLine());
 		System.out.println("| 7. JVM_ROUTE is the name of a balanced worker for web-server.                       ");
