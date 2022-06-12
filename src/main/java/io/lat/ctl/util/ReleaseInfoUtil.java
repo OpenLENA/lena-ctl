@@ -43,9 +43,9 @@ public class ReleaseInfoUtil {
 	 * @return depot path
 	 */
 	public static String getDepotPath(String serverType) throws IOException {
-		String[] split = getEngineVersion().split(".");
+		String[] split = getEngineVersion().split("\\.");
 
-		return FileUtil.getConcatPath(EnvUtil.getLatHome(), "lat", "depot", "template", serverType, "base-"+split[0]+"."+split[1]);
+		return FileUtil.getConcatPath(EnvUtil.getLatHome(), "lat", "depot", "template", serverType, "base-"+serverType+"-"+split[0]+"."+split[1]);
 	}
 
 	/**
