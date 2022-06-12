@@ -178,6 +178,6 @@ public abstract class LatInstaller implements Installer {
 		return StringUtil.isBlank(value) ? defaultValue : value;
 	}
 
-	protected abstract void execute();
+	protected abstract void execute() throws IOException;
 
 }
