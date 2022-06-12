@@ -14,6 +14,8 @@
 
 package io.lat.ctl.installer;
 
+import java.io.IOException;
+
 /**
  * Interface for Installer
  * @author Erick Yu
@@ -26,5 +28,5 @@ public interface Installer {
 	 * @param args command
 	 * @return Map Object which is installation result.
 	 */
-	public void execute(String[] args);
+	public void execute(String[] args) throws IOException;
 }

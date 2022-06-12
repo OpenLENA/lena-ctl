@@ -14,6 +14,7 @@
 
 package io.lat.ctl.installer;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -121,7 +122,7 @@ public abstract class LatInstaller implements Installer {
 	/**
 	 * execute server creation logic
 	 */
-	public void execute(String[] args) {
+	public void execute(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		load(args);
 		execute();
@@ -130,7 +131,7 @@ public abstract class LatInstaller implements Installer {
 	/**
 	 * @param args arguments
 	 */
-	private void load(String args[]) {
+	private void load(String args[]) throws IOException {
 		this.depotPath = ReleaseInfoUtil.getDepotPath(getServerType());
 
 		resultMap = new LinkedHashMap<String, String>();
