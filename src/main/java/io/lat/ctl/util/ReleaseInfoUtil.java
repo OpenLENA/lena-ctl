@@ -45,7 +45,7 @@ public class ReleaseInfoUtil {
 	 * @return depot path
 	 */
 	public static String getDepotPath(String serverType) throws IOException {
-
+    //TODO refactoring required
 		String[] split = new String[]{"",""};
 
 		if(serverType.equals("apache")){
