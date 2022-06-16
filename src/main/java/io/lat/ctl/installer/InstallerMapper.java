@@ -56,6 +56,14 @@ public class InstallerMapper {
 				case CLONE:
 					return new LatWasServerCloneInstaller(installerCommandType, installerServerType);
 			}
+		case ZODIAC:
+			switch (installerCommandType) {
+				case CREATE:
+					return new LatZodiacCreateInstaller(installerCommandType, installerServerType);
+				case CLONE:
+					//return new LatWasServerCloneInstaller(installerCommandType, installerServerType);
+					return null;
+			}
 		}
 		return null;
 	}

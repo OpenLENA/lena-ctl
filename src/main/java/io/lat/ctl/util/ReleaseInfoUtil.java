@@ -22,6 +22,7 @@ import javax.xml.xpath.XPathFactory;
 import io.lat.ctl.exception.LatException;
 import io.lat.ctl.installer.LatWasCreateInstaller;
 import io.lat.ctl.installer.LatWebCreateInstaller;
+import io.lat.ctl.installer.LatZodiacCreateInstaller;
 import io.lat.ctl.resolver.XpathVariable;
 
 import org.w3c.dom.Document;
@@ -52,6 +53,8 @@ public class ReleaseInfoUtil {
 			split = LatWebCreateInstaller.getEngineVersion().split("\\.");
 		}else if(serverType.equals("tomcat")){
 			split = LatWasCreateInstaller.getEngineVersion().split("\\.");
+		}else if(serverType.equals("zodiac")){
+			split = LatZodiacCreateInstaller.getEngineVersion().split("\\.");
 		}
 
 		return FileUtil.getConcatPath(EnvUtil.getLatHome(), "lat", "depot", "template", serverType, "base-"+serverType+"-"+split[0]+"."+split[1]);
