@@ -48,6 +48,8 @@ public class InstallerMapper {
 					return new LatWebCreateInstaller(installerCommandType, installerServerType);
 				case CLONE:
 					return new LatWebServerCloneInstaller(installerCommandType, installerServerType);
+				case DELETE:
+					return new LatInstanceDeleteInstaller(installerCommandType, installerServerType);
 			}
 		case TOMCAT:
 			switch (installerCommandType) {
@@ -55,14 +57,18 @@ public class InstallerMapper {
 					return new LatWasCreateInstaller(installerCommandType, installerServerType);
 				case CLONE:
 					return new LatWasServerCloneInstaller(installerCommandType, installerServerType);
+				case DELETE:
+					return new LatInstanceDeleteInstaller(installerCommandType, installerServerType);
 			}
 		case ZODIAC:
 			switch (installerCommandType) {
 				case CREATE:
 					return new LatZodiacCreateInstaller(installerCommandType, installerServerType);
 				case CLONE:
-					//return new LatWasServerCloneInstaller(installerCommandType, installerServerType);
+					// TODO
 					return null;
+				case DELETE:
+					return new LatInstanceDeleteInstaller(installerCommandType, installerServerType);
 			}
 		}
 		return null;

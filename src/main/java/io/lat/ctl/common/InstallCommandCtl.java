@@ -24,6 +24,7 @@ import org.apache.commons.cli.Options;
 public class InstallCommandCtl {
 	final String CREATE = "CREATE";
 	final String CLONE = "CLONE";
+	final String DELETE = "DELETE";
 
 	Options options = null;
 
@@ -49,6 +50,9 @@ public class InstallCommandCtl {
 			result = true;
 		}
 		if(CLONE.toLowerCase().equals(command.toLowerCase())) {
+			result = true;
+		}
+		if(DELETE.toLowerCase().equals(command.toLowerCase())) {
 			result = true;
 		}
 		return result;

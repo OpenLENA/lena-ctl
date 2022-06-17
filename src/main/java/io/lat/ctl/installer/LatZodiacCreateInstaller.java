@@ -20,15 +20,8 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Scanner;
 
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
 import io.lat.ctl.exception.LatException;
 import io.lat.ctl.type.InstallerCommandType;
@@ -37,7 +30,6 @@ import io.lat.ctl.util.EnvUtil;
 import io.lat.ctl.util.FileUtil;
 import io.lat.ctl.util.PropertyUtil;
 import io.lat.ctl.util.StringUtil;
-import io.lat.ctl.util.XmlUtil;
 
 /**
  * Installer that can create LA:T Zodiac
@@ -49,8 +41,7 @@ public class LatZodiacCreateInstaller extends LatInstaller {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(LatZodiacCreateInstaller.class);
 
-	public LatZodiacCreateInstaller(InstallerCommandType installerCommandType,
-			InstallerServerType installerServerType) {
+	public LatZodiacCreateInstaller(InstallerCommandType installerCommandType, InstallerServerType installerServerType) {
 		super(installerCommandType, installerServerType);
 		// TODO Auto-generated constructor stub
 	}
@@ -62,11 +53,9 @@ public class LatZodiacCreateInstaller extends LatInstaller {
 		HashMap<String, String> commandMap = getServerInfoFromUser();
 
 		String serverId = commandMap.get("SERVER_ID");
-		String servicePort = getParameterValue(commandMap.get("SERVICE_PORT"),
-				getDefaultValue(getServerType() + ".service-port"));
+		String servicePort = getParameterValue(commandMap.get("SERVICE_PORT"), getDefaultValue(getServerType() + ".service-port"));
 		String secondaryServerIp = commandMap.get("SECONDARY_SERVER_IP");
-		String secondaryServicePort = getParameterValue(commandMap.get("SECONDARY_SERVICE_PORT"),
-				getDefaultValue(getServerType() + ".secondary-service-port"));
+		String secondaryServicePort = getParameterValue(commandMap.get("SECONDARY_SERVICE_PORT"), getDefaultValue(getServerType() + ".secondary-service-port"));
 		String runUser = getParameterValue(commandMap.get("RUN_USER"), EnvUtil.getRunuser());
 		String installRootPath = FileUtil.getConcatPath(EnvUtil.getLatHome(), "instances", getServerType());
 		String targetPath = FileUtil.getConcatPath(installRootPath, getTargetDirName(serverId, servicePort));
@@ -101,43 +90,14 @@ public class LatZodiacCreateInstaller extends LatInstaller {
 		if (!logHome.equals(FileUtil.getConcatPath(targetPath, "logs"))) {
 			FileUtil.setShellVariable(FileUtil.getConcatPath(targetPath, "env.sh"), "LOG_HOME", logHome + "/${SERVER_ID}");
 		}
-		
 		PropertyUtil.setProperty(FileUtil.getConcatPath(targetPath, "session.conf"), "server.name", serverId);
 		PropertyUtil.setProperty(FileUtil.getConcatPath(targetPath, "session.conf"), "primary.port", servicePort);
-		PropertyUtil.setProperty(FileUtil.getConcatPath(targetPath, "session.conf"), "secondary.host",
-				secondaryServerIp);
-		PropertyUtil.setProperty(FileUtil.getConcatPath(targetPath, "session.conf"), "secondary.port",
-				secondaryServicePort);
+		PropertyUtil.setProperty(FileUtil.getConcatPath(targetPath, "session.conf"), "secondary.host", secondaryServerIp);
+		PropertyUtil.setProperty(FileUtil.getConcatPath(targetPath, "session.conf"), "secondary.port", secondaryServicePort);
 
 		// update install-info.xml
 		addInstallInfo(serverId, servicePort, targetPath);
 
-	}
-
-	/**
-	 * @param targetPath
-	 */
-	public void setSampleApplicationDocBase(String targetPath) {
-		String rootXmlPath = FileUtil.getConcatPath(targetPath, "conf", "Catalina", "localhost", "ROOT.xml");
-
-		if (FileUtil.exists(rootXmlPath)) {
-			Document document = XmlUtil.createDocument(rootXmlPath);
-			XPath xpath = XPathFactory.newInstance().newXPath();
-			try {
-				Element element = (Element) XmlUtil.xpathEvaluate("//Context", document, XPathConstants.NODE, xpath);
-
-				String docBase = element.getAttribute("docBase");
-
-				String defaultDocBase = FileUtil.getConcatPath(EnvUtil.getLatHome(), "lat", "depot", "lat-application",
-						"ROOT");
-				if (!defaultDocBase.equals(docBase)) {
-					element.setAttribute("docBase", defaultDocBase);
-					XmlUtil.writeXmlDocument(document, rootXmlPath);
-				}
-			} catch (XPathExpressionException e) {
-				LOGGER.debug("fail in setting sample application docbase");
-			}
-		}
 	}
 
 	/**
