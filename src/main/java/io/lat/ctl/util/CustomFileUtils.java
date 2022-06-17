@@ -21,26 +21,19 @@
 
 package io.lat.ctl.util;
 
-import java.io.File;
-import java.io.FileFilter;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.filefilter.DirectoryFileFilter;
+import org.apache.commons.io.filefilter.FalseFileFilter;
+import org.apache.commons.io.filefilter.FileFilterUtils;
+import org.apache.commons.io.filefilter.IOFileFilter;
+
+import java.io.*;
 import java.math.BigInteger;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.io.filefilter.DirectoryFileFilter;
-import org.apache.commons.io.filefilter.FalseFileFilter;
-import org.apache.commons.io.filefilter.FileFilterUtils;
-import org.apache.commons.io.filefilter.IOFileFilter;
-import org.apache.commons.io.filefilter.WildcardFileFilter;
 
 /**
  * General file manipulation utilities.
@@ -992,4 +985,26 @@ public class CustomFileUtils {
             }
         }
     }
+
+	public static Collection<File> listDirectories(
+			File directory, IOFileFilter fileFilter, IOFileFilter dirFilter) {
+		validateListFilesParameters(directory, fileFilter);
+
+		IOFileFilter effFileFilter = setUpEffectiveFileFilter(fileFilter);
+		IOFileFilter effDirFilter = setUpEffectiveDirFilter(dirFilter);
+
+		File[] found = directory.listFiles((FileFilter) fileFilter);
+		//Find files
+		Collection<File> files = new java.util.LinkedList<File>();
+		if (found != null) {
+			for (File file : found) {
+				if (file.isDirectory()) {
+					files.add(file);
+				}
+			}
+		}
+		//innerListFiles(files, directory,
+		//		FileFilterUtils.or(effFileFilter, effDirFilter), false);
+		return files;
+	}
 }

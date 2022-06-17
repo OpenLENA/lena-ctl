@@ -25,9 +25,12 @@ public class CommandCtl {
 	public static final String EXECUTOR = "EXECUTOR";
 
 	InstallCommandCtl installCommandCtl = null;
+	ConfigureCommandCtl configureCommandCtl = null;
 
 	public CommandCtl() {
+
 		installCommandCtl = new InstallCommandCtl();
+		configureCommandCtl = new ConfigureCommandCtl();
 	}
 
 	/**
@@ -39,7 +42,10 @@ public class CommandCtl {
 		String result = "";
 		if (installCommandCtl.containsCommand(command)) {
 			result = INSTALLER;
+		} else if (configureCommandCtl.containsCommand(command)){
+			result = CONFIGURATOR;
 		}
+
 		return result;
 	}
 }

@@ -14,17 +14,6 @@
 
 package io.lat.ctl.installer;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.Scanner;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
-
 import io.lat.ctl.exception.LatException;
 import io.lat.ctl.type.InstallerCommandType;
 import io.lat.ctl.type.InstallerServerType;
@@ -32,11 +21,21 @@ import io.lat.ctl.util.CipherUtil;
 import io.lat.ctl.util.EnvUtil;
 import io.lat.ctl.util.FileUtil;
 import io.lat.ctl.util.XmlUtil;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Scanner;
 
 /**
  * Installer that can create LA:T TOMCAT WAS.
@@ -173,6 +172,7 @@ public class LatWasCreateInstaller extends LatInstaller {
 		Process p = Runtime.getRuntime().exec(cmd);
 		BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
 		String s=br.readLine();
+		s = s.substring(7);
 
 		if(s==null){
 			throw new LatException("Tomcat engine is not installed");

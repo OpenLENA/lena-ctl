@@ -168,7 +168,7 @@ public class FileUtil {
 	 * @param name variable name
 	 * @return variable name & value
 	 */
-	private static String getShellVariableString(String shellFilePath, String name) {
+	public static String getShellVariableString(String shellFilePath, String name) {
 		BufferedReader br = null;
 		String variableString = null;
 

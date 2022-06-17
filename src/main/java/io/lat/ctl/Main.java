@@ -14,13 +14,14 @@
 
 package io.lat.ctl;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import io.lat.ctl.common.CommandCtl;
+import io.lat.ctl.configurator.Configurator;
+import io.lat.ctl.configurator.ConfiguratorMapper;
 import io.lat.ctl.installer.Installer;
 import io.lat.ctl.installer.InstallerMapper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Main of LA:T CTL
@@ -29,7 +30,7 @@ import io.lat.ctl.installer.InstallerMapper;
  */
 public class Main {
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws Exception {
 
 		List<String> commandList = new ArrayList<String>();
 
@@ -49,6 +50,9 @@ public class Main {
 		if (commandMapper.equals(CommandCtl.INSTALLER)) {
 			Installer installer = InstallerMapper.getInstaller(commandList); 
 			installer.execute(args);
+		}else if(commandMapper.equals(CommandCtl.CONFIGURATOR)) {
+			Configurator configurator = ConfiguratorMapper.getConfigurator(commandList);
+			configurator.execute(args);
 		}
 	}
 }
