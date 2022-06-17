@@ -14,7 +14,10 @@
 
 package io.lat.ctl.installer;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Scanner;
 import javax.xml.xpath.XPath;
@@ -22,6 +25,7 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
+import io.lat.ctl.exception.LatException;
 import io.lat.ctl.type.InstallerCommandType;
 import io.lat.ctl.type.InstallerServerType;
 import io.lat.ctl.util.CipherUtil;
@@ -51,20 +55,20 @@ public class LatWasCreateInstaller extends LatInstaller {
 	/**
 	 * Logic that actually creates the server
 	 */
-	public void execute() {
+	public void execute() throws IOException {
 		HashMap<String, String> commandMap = getServerInfoFromUser();
 		String serverId = commandMap.get("SERVER_ID");
 		String servicePort = getParameterValue(commandMap.get("SERVICE_PORT"), getDefaultValue(getServerType() + ".service-port"));
 		String runUser = getParameterValue(commandMap.get("RUN_USER"), EnvUtil.getRunuser());
-		String installRootPath = FileUtil.getConcatPath(EnvUtil.getLatHome(), "servers");
+		String installRootPath = FileUtil.getConcatPath(EnvUtil.getLatHome(), "instances", getServerType());
 		String ajpAddress = getParameterValue(commandMap.get("AJP_ADDRESS"), getDefaultValue(getServerType() + ".ajp-address"));
 		String ajpSecret = CipherUtil.md5(serverId);
 		String targetPath = FileUtil.getConcatPath(installRootPath, serverId);
 		String logHome = getParameterValue(commandMap.get("LOG_HOME"), FileUtil.getConcatPath(targetPath, "logs"));
 		String jvmRoute = getParameterValue(commandMap.get("JVM_ROUTE"), getDefaultValue(getServerType() + ".jvm-route"));
 
-		FileUtil.copyDirectory(FileUtil.getConcatPath(getDepotPath(), "module"), targetPath);
-		FileUtil.copyDirectory(FileUtil.getConcatPath(getDepotPath(), "template", getDefaultValue(getServerType() + ".template.dirname")), targetPath);
+		//FileUtil.copyDirectory(FileUtil.getConcatPath(getDepotPath(), "module"), targetPath);
+		FileUtil.copyDirectory(getDepotPath(), targetPath);
 
 		FileUtil.setShellVariable(FileUtil.getConcatPath(targetPath, "env.sh"), "JAVA_HOME", EnvUtil.getUserJavahome());
 		FileUtil.setShellVariable(FileUtil.getConcatPath(targetPath, "env.sh"), "LAT_HOME", EnvUtil.getLatHome());
@@ -73,6 +77,7 @@ public class LatWasCreateInstaller extends LatInstaller {
 		FileUtil.setShellVariable(FileUtil.getConcatPath(targetPath, "env.sh"), "INSTALL_PATH", targetPath);
 		FileUtil.setShellVariable(FileUtil.getConcatPath(targetPath, "env.sh"), "WAS_USER", runUser);
 		FileUtil.setShellVariable(FileUtil.getConcatPath(targetPath, "env.sh"), "JVM_ROUTE", jvmRoute);
+		FileUtil.setShellVariable(FileUtil.getConcatPath(targetPath, "env.sh"), "ENGN_VERSION", getEngineVersion());
 
 		if (!logHome.equals(FileUtil.getConcatPath(targetPath, "logs"))) {
 			FileUtil.setShellVariable(FileUtil.getConcatPath(targetPath, "env.sh"), "LOG_HOME", logHome + "/${SERVER_ID}");
@@ -104,7 +109,7 @@ public class LatWasCreateInstaller extends LatInstaller {
 
 				String docBase = element.getAttribute("docBase");
 
-				String defaultDocBase = FileUtil.getConcatPath(EnvUtil.getLatHome(), "depot", "lat-application", "ROOT");
+				String defaultDocBase = FileUtil.getConcatPath(EnvUtil.getLatHome(), "lat", "depot", "lat-application", "ROOT");
 				if (!defaultDocBase.equals(docBase)) {
 					element.setAttribute("docBase", defaultDocBase);
 					XmlUtil.writeXmlDocument(document, rootXmlPath);
@@ -137,7 +142,7 @@ public class LatWasCreateInstaller extends LatInstaller {
 		System.out.print("|: ");
 		commandMap.put("RUN_USER", scan.nextLine());
 		System.out.println("| 4. INSTALL_ROOT_PATH is server root directory in filesystem.                        ");
-		System.out.println("|    default : " + FileUtil.getConcatPath(EnvUtil.getLatHome(), "servers"));
+		System.out.println("|    default : " + FileUtil.getConcatPath(EnvUtil.getLatHome(), "instances", getServerType()));
 		System.out.print("|: ");
 		commandMap.put("INSTALL_ROOT_PATH", scan.nextLine());
 		System.out.println("| 5. AJP_ADDRESS is IP addresss used for listening on the specified port.             ");
@@ -146,7 +151,7 @@ public class LatWasCreateInstaller extends LatInstaller {
 		commandMap.put("AJP_ADDRESS", scan.nextLine());
 		System.out.println("| 6. LOG_HOME is LA:T Server's log directory in filesystem.                          ");
 		System.out.println("|    If you don't want to use default log directory input your custom log home prefix.");
-		System.out.println("|    default : " + FileUtil.getConcatPath(EnvUtil.getLatHome(), "servers", commandMap.get("SERVER_ID"), "logs"));
+		System.out.println("|    default : " + FileUtil.getConcatPath(EnvUtil.getLatHome(), "instances",getServerType(), commandMap.get("SERVER_ID"), "logs"));
 		System.out.print("|: ");
 		commandMap.put("LOG_HOME", scan.nextLine());
 		System.out.println("| 7. JVM_ROUTE is the name of a balanced worker for web-server.                       ");
@@ -157,5 +162,22 @@ public class LatWasCreateInstaller extends LatInstaller {
 
 		return commandMap;
 	}
+	public static String getEngineVersion() throws IOException {
+		String[] cmd;
+		if(System.getProperty("os.name").indexOf("Windows") > -1){
+			cmd=new String[]{"cmd","/c","ls -1r --sort=version "+FileUtil.getConcatPath(EnvUtil.getLatHome(),"engines", "tomcat")};
+		}else{
+			cmd=new String[]{"/bin/sh","-c","ls -1r --sort=version "+FileUtil.getConcatPath(EnvUtil.getLatHome(),"engines","tomcat")};
+		}
 
+		Process p = Runtime.getRuntime().exec(cmd);
+		BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
+		String s=br.readLine();
+
+		if(s==null){
+			throw new LatException("Tomcat engine is not installed");
+		}else{
+			return s;
+		}
+	}
 }

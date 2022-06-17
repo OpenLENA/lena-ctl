@@ -14,6 +14,7 @@
 
 package io.lat.ctl;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +29,7 @@ import io.lat.ctl.installer.InstallerMapper;
  */
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 
 		List<String> commandList = new ArrayList<String>();
 

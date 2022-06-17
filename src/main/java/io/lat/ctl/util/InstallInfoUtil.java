@@ -19,12 +19,12 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 import io.lat.ctl.common.vo.Server;
 import io.lat.ctl.exception.LatException;
 import io.lat.ctl.resolver.XpathVariable;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
 /**
  * Install info utilities.
@@ -68,6 +68,31 @@ public class InstallInfoUtil {
 			throw new LatException("An error occured when saving install-info.xml file", e);
 		}
 	}
+	
+	/**
+	 * install-info.xml파일에서 서버 설치정보를 삭제한다. 
+	 * @param id 서버ID
+	 */
+	public static void removeInstallInfo(String id){
+		String argoInstallFilePath = getInstallInfoFilePath();
+		
+		if(!existsServer(id)){
+			throw new LatException("Server id doesn't exist. '" +  id + "'");
+		}
+		
+		Document document = XmlUtil.createDocument(argoInstallFilePath);
+		XPath xpath = XPathFactory.newInstance().newXPath();
+		
+		try {
+			Element serverElement = (Element)XmlUtil.xpathEvaluate("//install/servers/server[id=$id]", document, XPathConstants.NODE, xpath, new XpathVariable("id", id));
+			
+			serverElement.getParentNode().removeChild(serverElement);
+			
+			XmlUtil.writeXmlDocument(document, argoInstallFilePath);
+		} catch (Throwable e) {
+			throw new LatException("An error occured when saving install-info.xml file", e);
+		}
+	}
 
 	/**
 	 * Returns install-info file path
@@ -75,7 +100,7 @@ public class InstallInfoUtil {
 	 * @return install -info file path
 	 */
 	public static String getInstallInfoFilePath() {
-		return FileUtil.getConcatPath(EnvUtil.getLatHome(), "etc", "info", "install-info.xml");
+		return FileUtil.getConcatPath(EnvUtil.getLatHome(), "lat", "etc", "info", "install-info.xml");
 	}
 
 	/**

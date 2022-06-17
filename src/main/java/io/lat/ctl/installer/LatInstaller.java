@@ -14,11 +14,15 @@
 
 package io.lat.ctl.installer;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import io.lat.ctl.common.vo.Server;
+import io.lat.ctl.exception.LatException;
 import io.lat.ctl.type.InstallerCommandType;
 import io.lat.ctl.type.InstallerServerType;
 import io.lat.ctl.util.EnvUtil;
@@ -76,6 +80,14 @@ public abstract class LatInstaller implements Installer {
 	}
 	
 	/**
+	 * install-info.xml파일에서 서버 설치정보를 삭제한다. 
+	 * @param id 서버ID
+	 */
+	protected void removeInstallInfo(String serverId) {
+		InstallInfoUtil.removeInstallInfo(serverId);
+	}
+	
+	/**
 	 * @param serverId
 	 * @param servicePort
 	 * @param path install path
@@ -121,7 +133,7 @@ public abstract class LatInstaller implements Installer {
 	/**
 	 * execute server creation logic
 	 */
-	public void execute(String[] args) {
+	public void execute(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		load(args);
 		execute();
@@ -130,7 +142,7 @@ public abstract class LatInstaller implements Installer {
 	/**
 	 * @param args arguments
 	 */
-	private void load(String args[]) {
+	private void load(String args[]) throws IOException {
 		this.depotPath = ReleaseInfoUtil.getDepotPath(getServerType());
 
 		resultMap = new LinkedHashMap<String, String>();
@@ -161,9 +173,11 @@ public abstract class LatInstaller implements Installer {
 		map.put("tomcat.template.dirname", InstallConfigUtil.getProperty("tomcat.template.dirname", "base"));
 
 		// lena-web default value
-		map.put("apache.service-port", InstallConfigUtil.getProperty("lat-web.service-port.default", "80"));
-		map.put("apache.run-user", InstallConfigUtil.getProperty("lat-web.run-user.default", "latw"));
-		map.put("apache.template.dirname", InstallConfigUtil.getProperty("lat-web.template.dirname", "base"));
+		map.put("apache.service-port", InstallConfigUtil.getProperty("apache.service-port.default", "80"));
+		map.put("apache.run-user", InstallConfigUtil.getProperty("apache.run-user.default", "latw"));
+		map.put("apache.template.dirname", InstallConfigUtil.getProperty("apache.template.dirname", "base"));
+		
+		// TODO
 
 		return map;
 	}
@@ -176,7 +190,33 @@ public abstract class LatInstaller implements Installer {
 	protected String getParameterValue(String value, String defaultValue) {
 		return StringUtil.isBlank(value) ? defaultValue : value;
 	}
+	
+	/**
+	 * 서버가 기동중인지 확인한다
+	 * @param targetPath
+	 * @param commandFileName
+	 */
+	protected boolean isRunning(String targetPath, String commandFileName) {
+		boolean res = true;
+		
+		String[] cmd = new String[]{FileUtil.getConcatPath(targetPath) + "/" + commandFileName + ".sh"};
+		
+		try {
+		
+			Process p = Runtime.getRuntime().exec(cmd);
+			BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
+			String s = br.readLine();
+			
+			if(s == null) {
+				res = false;
+			}
+		} catch (Exception e) {
+			throw new LatException(e);
+		}
+		
+		return res;
+	}
 
-	protected abstract void execute();
+	protected abstract void execute() throws IOException;
 
 }
