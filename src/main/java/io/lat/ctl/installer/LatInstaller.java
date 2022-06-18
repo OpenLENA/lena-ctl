@@ -217,6 +217,25 @@ public abstract class LatInstaller implements Installer {
 		return res;
 	}
 
+	public static String getEngineVersion(String serverType) throws IOException {
+		String[] cmd;
+		if(System.getProperty("os.name").indexOf("Windows") > -1){
+			cmd=new String[]{"cmd","/c","ls -1r --sort=version "+FileUtil.getConcatPath(EnvUtil.getLatHome(),"engines", serverType)};
+		}else{
+			cmd=new String[]{"/bin/sh","-c","ls -1r --sort=version "+FileUtil.getConcatPath(EnvUtil.getLatHome(),"engines", serverType)};
+		}
+
+		Process p = Runtime.getRuntime().exec(cmd);
+		BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
+		String s=br.readLine();
+
+		if(s==null){
+			throw new LatException("Apache engine is not installed");
+		} else{
+			return s.substring(s.indexOf("-") + 1);
+		}
+	}
+
 	protected abstract void execute() throws IOException;
 
 }

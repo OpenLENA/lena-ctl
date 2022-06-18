@@ -84,7 +84,7 @@ public class LatZodiacCreateInstaller extends LatInstaller {
 		FileUtil.setShellVariable(FileUtil.getConcatPath(targetPath, "env.sh"), "JAVA_HOME", EnvUtil.getUserJavahome());
 		FileUtil.setShellVariable(FileUtil.getConcatPath(targetPath, "env.sh"), "LAT_HOME", EnvUtil.getLatHome());
 		FileUtil.setShellVariable(FileUtil.getConcatPath(targetPath, "env.sh"), "SERVER_ID", serverId);
-		FileUtil.setShellVariable(FileUtil.getConcatPath(targetPath, "env.sh"), "ENGN_VERSION", getEngineVersion());
+		FileUtil.setShellVariable(FileUtil.getConcatPath(targetPath, "env.sh"), "ENGN_VERSION", getEngineVersion("zodiac"));
 		FileUtil.setShellVariable(FileUtil.getConcatPath(targetPath, "env.sh"), "ZODIAC_HOME", targetPath);
 		FileUtil.setShellVariable(FileUtil.getConcatPath(targetPath, "env.sh"), "RUN_USER", runUser);
 		if (!logHome.equals(FileUtil.getConcatPath(targetPath, "logs"))) {
@@ -144,24 +144,24 @@ public class LatZodiacCreateInstaller extends LatInstaller {
 		return commandMap;
 	}
 
-	public static String getEngineVersion() throws IOException {
-		String[] cmd;
-		if (System.getProperty("os.name").indexOf("Windows") > -1) {
-			cmd = new String[] { "cmd", "/c",
-					"ls -1r --sort=version " + FileUtil.getConcatPath(EnvUtil.getLatHome(), "engines", "zodiac") };
-		} else {
-			cmd = new String[] { "/bin/sh", "-c",
-					"ls -1r --sort=version " + FileUtil.getConcatPath(EnvUtil.getLatHome(), "engines", "zodiac") };
-		}
-
-		Process p = Runtime.getRuntime().exec(cmd);
-		BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
-		String s = br.readLine();
-
-		if (s == null) {
-			throw new LatException("Tomcat engine is not installed");
-		} else {
-			return s;
-		}
-	}
+//	public static String getEngineVersion() throws IOException {
+//		String[] cmd;
+//		if (System.getProperty("os.name").indexOf("Windows") > -1) {
+//			cmd = new String[] { "cmd", "/c",
+//					"ls -1r --sort=version " + FileUtil.getConcatPath(EnvUtil.getLatHome(), "engines", "zodiac") };
+//		} else {
+//			cmd = new String[] { "/bin/sh", "-c",
+//					"ls -1r --sort=version " + FileUtil.getConcatPath(EnvUtil.getLatHome(), "engines", "zodiac") };
+//		}
+//
+//		Process p = Runtime.getRuntime().exec(cmd);
+//		BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
+//		String s = br.readLine();
+//
+//		if (s == null) {
+//			throw new LatException("Tomcat engine is not installed");
+//		} else {
+//			return s;
+//		}
+//	}
 }

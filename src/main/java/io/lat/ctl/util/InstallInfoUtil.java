@@ -100,7 +100,7 @@ public class InstallInfoUtil {
 	 * @return install -info file path
 	 */
 	public static String getInstallInfoFilePath() {
-		return FileUtil.getConcatPath(EnvUtil.getLatHome(), "lat", "etc", "info", "install-info.xml");
+		return FileUtil.getConcatPath(EnvUtil.getLatManagementHome(), "etc", "info", "install-info.xml");
 	}
 
 	/**

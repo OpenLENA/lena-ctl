@@ -50,14 +50,14 @@ public class ReleaseInfoUtil {
 		String[] split = new String[]{"",""};
 
 		if(serverType.equals("apache")){
-			split = LatWebCreateInstaller.getEngineVersion().split("\\.");
+			split = LatWebCreateInstaller.getEngineVersion("apache").split("\\.");
 		}else if(serverType.equals("tomcat")){
-			split = LatWasCreateInstaller.getEngineVersion().split("\\.");
+			split = LatWasCreateInstaller.getEngineVersion("tomcat").split("\\.");
 		}else if(serverType.equals("zodiac")){
-			split = LatZodiacCreateInstaller.getEngineVersion().split("\\.");
+			split = LatZodiacCreateInstaller.getEngineVersion("zodiac").split("\\.");
 		}
 
-		return FileUtil.getConcatPath(EnvUtil.getLatHome(), "lat", "depot", "template", serverType, "base-"+serverType+"-"+split[0]+"."+split[1]);
+		return FileUtil.getConcatPath(EnvUtil.getLatManagementHome(), "depot", "template", serverType, "base-"+serverType+"-"+split[0]+"."+split[1]);
 	}
 
 	/**
@@ -102,8 +102,8 @@ public class ReleaseInfoUtil {
 	 * @param latHome the lena home
 	 * @return release info file path
 	 */
-	public static String getReleaseInfoFilePath(String latHome) {
-		String argoReleaseFilePath = FileUtil.getConcatPath(latHome, "lat", "etc", "info", "release-info.xml");
+	public static String getReleaseInfoFilePath(String latManagementHome) {
+		String argoReleaseFilePath = FileUtil.getConcatPath(latManagementHome, "etc", "info", "release-info.xml");
 		if (!FileUtil.exists(argoReleaseFilePath)) {
 			throw new LatException("There is no release-info.xml file");
 		}
@@ -116,6 +116,6 @@ public class ReleaseInfoUtil {
 	 * @return release info file path
 	 */
 	public static String getReleaseInfoFilePath() {
-		return getReleaseInfoFilePath(EnvUtil.getLatHome());
+		return getReleaseInfoFilePath(EnvUtil.getLatManagementHome());
 	}
 }
