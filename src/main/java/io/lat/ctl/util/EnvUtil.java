@@ -24,6 +24,7 @@ public class EnvUtil {
 	private static final String javaHome;
 	private static final String userJavaHome;
 	private static final String latHome;
+	private static final String latManagementHome;
 	private static final String hostname;
 	private static final String runUser;
 	private static final String userHome;
@@ -35,6 +36,7 @@ public class EnvUtil {
 		javaHome = System.getProperty("java.home");
 		userJavaHome = System.getProperty("user_java.home", javaHome);
 		latHome = System.getProperty("lat.home");
+		latManagementHome = System.getProperty("lat.management.home");
 		hostname = System.getProperty("hostname");
 		runUser = System.getProperty("run_user");
 		userHome = System.getProperty("user.home");
@@ -62,12 +64,21 @@ public class EnvUtil {
 	}
 
 	/**
-	 * Returns path of lena installed directory.
+	 * Returns path of lat installed directory.
 	 *
-	 * @return lenaHome
+	 * @return latHome
 	 */
 	public static String getLatHome() {
 		return latHome;
+	}
+	
+	/**
+	 * Returns path of lat management installed directory.
+	 *
+	 * @return latManagementHome
+	 */
+	public static String getLatManagementHome() {
+		return latManagementHome;
 	}
 
 	/**

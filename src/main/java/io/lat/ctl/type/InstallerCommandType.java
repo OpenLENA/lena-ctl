@@ -21,7 +21,8 @@ package io.lat.ctl.type;
  */
 public enum InstallerCommandType {
 	CREATE("create"),
-	CLONE("clone");
+	CLONE("clone"),
+	DELETE("delete");
 
 	private String command;
 
