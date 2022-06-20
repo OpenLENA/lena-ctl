@@ -12,16 +12,15 @@ import org.apache.commons.compress.compressors.CompressorException;
 import org.apache.commons.compress.compressors.CompressorInputStream;
 import org.apache.commons.compress.compressors.CompressorStreamFactory;
 import org.apache.commons.compress.utils.IOUtils;
+import org.apache.commons.httpclient.HttpClient;
+
+import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
 
 import java.io.*;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.util.ArrayList;
@@ -102,7 +101,7 @@ public class EngineUtil {
     }
 
 
-    public static void listEngines(String serverType) throws URISyntaxException, ExecutionException, InterruptedException {
+    public static void listEngines(String serverType) throws URISyntaxException, ExecutionException, InterruptedException, IOException {
         List<String> availableList = getEnginesFromGithub(serverType);
         Collection<File> installedList = getInstalledEngines(serverType);
 
@@ -122,10 +121,12 @@ public class EngineUtil {
             System.out.println();
         }
     }
-    public static List<String> getEnginesFromGithub(String serverType) throws URISyntaxException, ExecutionException, InterruptedException {
-        String address = "https://api.github.com/repos/ATLENA/lat-"+serverType+"-runtimes/git/trees/main";
+    public static List<String> getEnginesFromGithub(String serverType) throws URISyntaxException, ExecutionException, InterruptedException, IOException {
+        String URL = "https://api.github.com/repos/ATLENA/lat-"+serverType+"-runtimes/git/trees/main";
 
-        HttpClient client = HttpClient.newBuilder().version(HttpClient.Version.HTTP_1_1).build();
+        /*
+        HttpClient client = HttpClient
+                .newBuilder().version(HttpClient.Version.HTTP_1_1).build();
         String result = client.sendAsync(
                         HttpRequest.newBuilder(
                                 new URI(address)).GET().build(),  //GET방식 요청
@@ -133,10 +134,17 @@ public class EngineUtil {
                 ).thenApply(HttpResponse::body)  //thenApply메소드로 응답body값만 받기
                 .get();  //get메소드로 body값의 문자를 확인
 
-        Gson gson = new Gson();
-        JsonObject jo = gson.fromJson(result, JsonObject.class);
+         */
 
- List<String> re = new ArrayList<String>();
+        HttpClient client = new HttpClient();
+        GetMethod getMethod = new GetMethod(URL);
+        int statusCode = client.executeMethod(getMethod);
+        String response = getMethod.getResponseBodyAsString();
+
+        Gson gson = new Gson();
+        JsonObject jo = gson.fromJson(response, JsonObject.class);
+
+        List<String> re = new ArrayList<String>();
 
         JsonArray ja = jo.get("tree").getAsJsonArray();
 
