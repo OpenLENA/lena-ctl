@@ -14,23 +14,19 @@
 
 package io.lat.ctl.util;
 
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
-
 import io.lat.ctl.exception.LatException;
 import io.lat.ctl.installer.LatWasCreateInstaller;
 import io.lat.ctl.installer.LatWebCreateInstaller;
 import io.lat.ctl.installer.LatZodiacCreateInstaller;
 import io.lat.ctl.resolver.XpathVariable;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
 import java.io.IOException;
-
-import static io.lat.ctl.installer.LatWebCreateInstaller.getEngineVersion;
 
 /**
  * Release info utilities.
@@ -99,7 +95,7 @@ public class ReleaseInfoUtil {
 	/**
 	 * Search the path of the release-info.xml file.
 	 *
-	 * @param latHome the lena home
+	 * @param latManagementHome the lat home
 	 * @return release info file path
 	 */
 	public static String getReleaseInfoFilePath(String latManagementHome) {

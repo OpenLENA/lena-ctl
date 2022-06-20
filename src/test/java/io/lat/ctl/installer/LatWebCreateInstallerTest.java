@@ -1,24 +1,21 @@
 package io.lat.ctl.installer;
 
+import io.lat.ctl.type.InstallerCommandType;
+import io.lat.ctl.type.InstallerServerType;
+import io.lat.ctl.util.CustomFileUtils;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.contrib.java.lang.system.TextFromStandardInputStream;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import io.lat.ctl.installer.LatWebCreateInstaller;
-import io.lat.ctl.type.InstallerCommandType;
-import io.lat.ctl.type.InstallerServerType;
-import io.lat.ctl.util.CustomFileUtils;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-
-import static org.junit.Assert.*;
-
-import org.junit.contrib.java.lang.system.TextFromStandardInputStream;
+import static org.junit.Assert.assertEquals;
 
 public class LatWebCreateInstallerTest {
 
@@ -43,18 +40,17 @@ public class LatWebCreateInstallerTest {
 		String port = "7080";
 		String user = "lenaw";
 		String engnPath = top.getAbsolutePath() + File.separator + "modules" + File.separator + "lena-web-pe";
-		String installPath = top.getAbsolutePath() + File.separator + "servers";
+		String installPath = top.getAbsolutePath() + File.separator + "instances";
 		String logPath = installPath + File.separator + "logs";
 		String docPath = installPath + File.separator + "htdocs";
 
-		systemInMock.provideLines(id, port, user, engnPath, installPath, logPath, docPath);
+		systemInMock.provideLines(id, port, user, installPath, logPath, docPath);
 		LatWebCreateInstaller installer = new LatWebCreateInstaller(InstallerCommandType.CREATE, InstallerServerType.APACHE);
 		HashMap<String, String> result = installer.getServerInfoFromUser();
 
 		assertEquals(id, result.get("SERVER_ID"));
 		assertEquals(port, result.get("SERVICE_PORT"));
 		assertEquals(user, result.get("RUN_USER"));
-		assertEquals(engnPath, result.get("APACHE_ENGINE_PATH"));
 		assertEquals(installPath, result.get("INSTALL_ROOT_PATH"));
 		assertEquals(logPath, result.get("LOG_HOME"));
 		assertEquals(docPath, result.get("DOCUMENT_ROOT_PATH"));

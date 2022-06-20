@@ -1,23 +1,21 @@
 package io.lat.ctl.installer;
 
+import io.lat.ctl.type.InstallerCommandType;
+import io.lat.ctl.type.InstallerServerType;
+import io.lat.ctl.util.CustomFileUtils;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.contrib.java.lang.system.TextFromStandardInputStream;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import io.lat.ctl.type.InstallerCommandType;
-import io.lat.ctl.type.InstallerServerType;
-import io.lat.ctl.util.CustomFileUtils;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-
-import static org.junit.Assert.*;
-
-import org.junit.contrib.java.lang.system.TextFromStandardInputStream;
+import static org.junit.Assert.assertEquals;
 
 public class LatWasCreateInstallerTest {
 
@@ -57,7 +55,7 @@ public class LatWasCreateInstallerTest {
 		String id = "server_id";
 		String port = "8080";
 		String user = "lena";
-		String installPath = top.getAbsolutePath() + File.separator + "servers";
+		String installPath = top.getAbsolutePath() + File.separator + "instances";
 		String ajpAddr = "127.0.0.1";
 		String logPath = installPath + File.separator + "logs";
 		String jvmRoute = "jvmRoute";
