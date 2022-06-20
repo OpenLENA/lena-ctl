@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  *
  */
 public enum InstallerServerType {
-	APACHE("apache"), TOMCAT("tomcat");
+	APACHE("apache"), TOMCAT("tomcat"), ZODIAC("zodiac");
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(InstallerServerType.class);
 

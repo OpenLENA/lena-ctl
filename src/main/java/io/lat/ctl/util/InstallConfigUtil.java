@@ -32,7 +32,7 @@ public class InstallConfigUtil {
 	private static void load() {
 		properties = new Properties();
 		FileInputStream fis = null;
-		String filePath = FileUtil.getConcatPath(EnvUtil.getLatHome(), "etc", "info", "installer.info");
+		String filePath = FileUtil.getConcatPath(EnvUtil.getLatManagementHome(), "etc", "info", "installer.info");
 		try {
 			fis = new FileInputStream(filePath);
 			properties.load(fis);

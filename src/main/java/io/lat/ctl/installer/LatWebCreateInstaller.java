@@ -25,7 +25,6 @@ import java.util.Scanner;
 import io.lat.ctl.exception.LatException;
 import io.lat.ctl.type.InstallerCommandType;
 import io.lat.ctl.type.InstallerServerType;
-import io.lat.ctl.util.CipherUtil;
 import io.lat.ctl.util.EnvUtil;
 import io.lat.ctl.util.FileUtil;
 
@@ -47,24 +46,23 @@ public class LatWebCreateInstaller extends LatInstaller {
 	public void execute() {
 		try {
 
-			String version = getEngineVersion();
-		HashMap<String, String> commandMap = getServerInfoFromUser();
-		String serverId = commandMap.get("SERVER_ID");
-		String servicePort = getParameterValue(commandMap.get("SERVICE_PORT"), getDefaultValue(getServerType() + ".service-port"));
-		String runUser = getParameterValue(commandMap.get("RUN_USER"), EnvUtil.getRunuser());
-
-		String apacheEnginePath = getParameterValue(commandMap.get("APACHE_ENGINE_PATH"), FileUtil.getConcatPath(EnvUtil.getLatHome(), "engines", "apache", version));
-		String installRootPath = getParameterValue(commandMap.get("INSTALL_ROOT_PATH"), FileUtil.getConcatPath(EnvUtil.getLatHome(), "instances", "apache"));
-		String targetPath = FileUtil.getConcatPath(installRootPath, serverId);
-		String logHome = getParameterValue(commandMap.get("LOG_HOME"), FileUtil.getConcatPath(targetPath, "logs"));
-		String documentRootPath = getParameterValue(commandMap.get("DOCUMENT_ROOT_PATH"), FileUtil.getConcatPath(targetPath, "htdocs"));
-
-		System.out.println("DEPOT PATH =========> "+getDepotPath());
-
+			String version = getEngineVersion("apache");
+			HashMap<String, String> commandMap = getServerInfoFromUser();
+			String serverId = commandMap.get("SERVER_ID");
+			String servicePort = getParameterValue(commandMap.get("SERVICE_PORT"), getDefaultValue(getServerType() + ".service-port"));
+			String runUser = getParameterValue(commandMap.get("RUN_USER"), EnvUtil.getRunuser());
+			
+			//String apacheEnginePath = getParameterValue(commandMap.get("APACHE_ENGINE_PATH"), FileUtil.getConcatPath(EnvUtil.getLatHome(), "engines", "apache", "apache-" + version));
+			String installRootPath = getParameterValue(commandMap.get("INSTALL_ROOT_PATH"), FileUtil.getConcatPath(EnvUtil.getLatHome(), "instances", "apache"));
+			String targetPath = FileUtil.getConcatPath(installRootPath, serverId);
+			String logHome = getParameterValue(commandMap.get("LOG_HOME"), FileUtil.getConcatPath(targetPath, "logs"));
+			String documentRootPath = getParameterValue(commandMap.get("DOCUMENT_ROOT_PATH"), FileUtil.getConcatPath(targetPath, "htdocs"));
 
 			FileUtil.copyDirectory(getDepotPath(), targetPath);
 
-			FileUtil.setShellVariable(FileUtil.getConcatPath(targetPath, "env.sh"), "ENGN_HOME", apacheEnginePath);
+			FileUtil.setShellVariable(FileUtil.getConcatPath(targetPath, "env.sh"), "LAT_HOME", EnvUtil.getLatHome());
+			FileUtil.setShellVariable(FileUtil.getConcatPath(targetPath, "env.sh"), "ENGN_VERSION", getEngineVersion("apache"));
+			//FileUtil.setShellVariable(FileUtil.getConcatPath(targetPath, "env.sh"), "ENGN_HOME", apacheEnginePath);
 			FileUtil.setShellVariable(FileUtil.getConcatPath(targetPath, "env.sh"), "SERVER_ID", serverId);
 			FileUtil.setShellVariable(FileUtil.getConcatPath(targetPath, "env.sh"), "SERVICE_PORT", servicePort);
 			FileUtil.setShellVariable(FileUtil.getConcatPath(targetPath, "env.sh"), "RUN_USER", runUser);
@@ -101,19 +99,19 @@ public class LatWebCreateInstaller extends LatInstaller {
 		System.out.println("|    default : " + EnvUtil.getRunuser());
 		System.out.print("|: ");
 		commandMap.put("RUN_USER", scan.nextLine());
-		System.out.println("| 4. APACHE_ENGINE_PATH is the path of Apache Server engine                           ");
-		System.out.println("|    default : " + FileUtil.getConcatPath(EnvUtil.getLatHome(), "engines", "apache", getEngineVersion()));
-		System.out.print("|: ");
-		commandMap.put("APACHE_ENGINE_PATH", scan.nextLine());
-		System.out.println("| 5. INSTALL_ROOT_PATH is Apache Server root directory in filesystem.                 ");
+//		System.out.println("| 4. APACHE_ENGINE_PATH is the path of Apache Server engine                           ");
+//		System.out.println("|    default : " + FileUtil.getConcatPath(EnvUtil.getLatHome(), "engines", "apache", getEngineVersion("apache")));
+//		System.out.print("|: ");
+//		commandMap.put("APACHE_ENGINE_PATH", scan.nextLine());
+		System.out.println("| 4. INSTALL_ROOT_PATH is Apache Server root directory in filesystem.                 ");
 		System.out.println("|    default : " + FileUtil.getConcatPath(EnvUtil.getLatHome(), "instances"));
 		System.out.print("|: ");
 		commandMap.put("INSTALL_ROOT_PATH", scan.nextLine());
-		System.out.println("| 6. LOG_HOME is Apache Server's log directory in filesystem.                         ");
+		System.out.println("| 5. LOG_HOME is Apache Server's log directory in filesystem.                         ");
 		System.out.println("|    default : " + FileUtil.getConcatPath(EnvUtil.getLatHome(), "instances", commandMap.get("SERVER_ID"), "logs"));
 		System.out.print("|: ");
 		commandMap.put("LOG_HOME", scan.nextLine());
-		System.out.println("| 7. DOCUMENT_ROOT_PATH is Apache Server's contents directory in filesystem.          ");
+		System.out.println("| 6. DOCUMENT_ROOT_PATH is Apache Server's contents directory in filesystem.          ");
 		System.out.println("|    default : " + FileUtil.getConcatPath(EnvUtil.getLatHome(), "instances", commandMap.get("SERVER_ID"), "htdocs"));
 		System.out.print("|: ");
 		commandMap.put("DOCUMENT_ROOT_PATH", scan.nextLine());
@@ -121,23 +119,23 @@ public class LatWebCreateInstaller extends LatInstaller {
 		return commandMap;
 	}
 
-	public static String getEngineVersion() throws IOException {
-		String[] cmd;
-		if(System.getProperty("os.name").indexOf("Windows") > -1){
-			cmd=new String[]{"cmd","/c","ls -1r --sort=version "+FileUtil.getConcatPath(EnvUtil.getLatHome(),"engines", "apache")};
-		}else{
-			cmd=new String[]{"/bin/sh","-c","ls -1r --sort=version "+FileUtil.getConcatPath(EnvUtil.getLatHome(),"engines","apache")};
-		}
-
-		Process p = Runtime.getRuntime().exec(cmd);
-		BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
-		String s=br.readLine();
-
-		if(s==null){
-			throw new LatException("Apache engine is not installed");
-		}else{
-			return s;
-		}
-	}
+//	public static String getEngineVersion() throws IOException {
+//		String[] cmd;
+//		if(System.getProperty("os.name").indexOf("Windows") > -1){
+//			cmd=new String[]{"cmd","/c","ls -1r --sort=version "+FileUtil.getConcatPath(EnvUtil.getLatHome(),"engines", "apache")};
+//		}else{
+//			cmd=new String[]{"/bin/sh","-c","ls -1r --sort=version "+FileUtil.getConcatPath(EnvUtil.getLatHome(),"engines","apache")};
+//		}
+//
+//		Process p = Runtime.getRuntime().exec(cmd);
+//		BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
+//		String s=br.readLine();
+//
+//		if(s==null){
+//			throw new LatException("Apache engine is not installed");
+//		}else{
+//			return s;
+//		}
+//	}
 
 }
