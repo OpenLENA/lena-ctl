@@ -3,7 +3,7 @@
 This is the home of the LENA Ctl.
 LENA Ctl help to install servers easily by offering command line interface in LENA.
 
-The feature of LENA Ctl : 
+The feature of LENA Ctl :  
 
 + Installation : Create, Delete and Clone server. Don't need to type in much things when create server, just required server name and service port.
   Clone server is so useful when you wanna save the status of the server right away.
